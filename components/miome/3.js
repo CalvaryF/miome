@@ -1,10 +1,22 @@
-import { wiggle, karm, bowl } from "./miome_utils";
+import { wiggle, bowl } from "./miome_utils";
 import * as d3 from "d3";
 
-function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
-  if (weight > 2) weight = 2;
+function three(
+  svg,
+  x,
+  ypos,
+  xoff,
+  yoff,
+  fontsize,
+  weight,
+  wig,
+  id,
+  update,
+  cons
+) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
+  let arcwidth = fontsize / 4;
   const width = fontsize;
   const path = d3.path();
   let xpos = x + strokewidth / 2;
@@ -23,22 +35,20 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  //bottom segment -----------------
-  path.moveTo(xpos + xbotoff, ypos - ybotoff);
-  path.lineTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
-
-  //top segment -----------------
-  path.moveTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
-  path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
-
-  //left wiggle
-  wiggle(
+  bowl(
     path,
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
     xpos + xbotoff,
     ypos - segmentheight - ybotoff,
-    ctrlHeight
+    ctrlHeight,
+    arcwidth,
+    true,
+    ybotoff,
+    ytopoff,
+    strokewidth,
+
+    fontsize / 4
   );
 
   bowl(
@@ -48,28 +58,12 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
     xpos + xbotoff,
     ypos - segmentheight - ybotoff,
     ctrlHeight,
-    fontsize / 4,
-    true,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    0
-  );
-
-  karm(
-    path,
-    ypos - ybotoff,
-    xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    fontsize / 2,
+    arcwidth,
     false,
     ybotoff,
     ytopoff,
     strokewidth,
-    false
+    fontsize / 4
   );
 
   //console.log(path);
@@ -84,7 +78,6 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
-
     if (cons) {
       svg
         .append("path")
@@ -113,7 +106,5 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
       .attr("d", path)
       .attr("stroke-width", strokewidth);
   }
-
-  //construction lines
 }
-export { r };
+export { three };

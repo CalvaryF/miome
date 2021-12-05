@@ -53,7 +53,7 @@ function b(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
     ybotoff,
     ytopoff,
     strokewidth,
-    true
+    0
   );
 
   bowl(
@@ -68,7 +68,7 @@ function b(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
     ybotoff,
     ytopoff,
     strokewidth,
-    true
+    0
   );
 
   //console.log(path);

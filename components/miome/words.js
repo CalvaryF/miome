@@ -1,4 +1,4 @@
-import letter from "../miome/letter";
+import char from "./char";
 import styled from "styled-components";
 import React, { useEffect, useRef } from "react";
 import { select } from "d3";
@@ -27,7 +27,7 @@ function word(
     // if (string[i] == "i") {
     //   offset -= fontsize / 4;
     // }
-    letter(
+    char(
       string[i],
       svg,
       xpos + i * fontsize + i * space + offset,
@@ -92,19 +92,19 @@ export default function Word({ width, height, fontsize, space, children }) {
         300,
         index * 0.02,
         -index * 0.01,
-        50,
-        0.1,
+        fontsize,
+        0.2,
         2,
         "a",
-        10,
-        false
+        space,
+        true
       );
     }, 10);
 
     return () => {
       clearInterval(interval);
     };
-  }, [children]);
+  }, [children, fontsize, space]);
 
   return (
     <div ref={DivRef}>

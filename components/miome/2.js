@@ -1,10 +1,22 @@
-import { wiggle, karm, bowl } from "./miome_utils";
+import { wiggle, bowl, reversebowl, clipBez, bezPoint } from "./miome_utils";
 import * as d3 from "d3";
 
-function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
-  if (weight > 2) weight = 2;
+function two(
+  svg,
+  x,
+  ypos,
+  xoff,
+  yoff,
+  fontsize,
+  weight,
+  wig,
+  id,
+  update,
+  cons
+) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
+  let arcwidth = fontsize / 4;
   const width = fontsize;
   const path = d3.path();
   let xpos = x + strokewidth / 2;
@@ -23,24 +35,6 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  //bottom segment -----------------
-  path.moveTo(xpos + xbotoff, ypos - ybotoff);
-  path.lineTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
-
-  //top segment -----------------
-  path.moveTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
-  path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
-
-  //left wiggle
-  wiggle(
-    path,
-    xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight
-  );
-
   bowl(
     path,
     xpos + xtopoff,
@@ -48,7 +42,7 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
     xpos + xbotoff,
     ypos - segmentheight - ybotoff,
     ctrlHeight,
-    fontsize / 4,
+    arcwidth,
     true,
     ybotoff,
     ytopoff,
@@ -56,23 +50,48 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
     0
   );
 
-  karm(
-    path,
-    ypos - ybotoff,
-    xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    fontsize / 2,
-    false,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    false
+  //bottom segment -----------------
+  path.moveTo(xpos + xbotoff, ypos - ybotoff);
+  path.lineTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
+
+  //bottom line -----------------
+  path.moveTo(
+    xpos + xbotoff - strokewidth / 2,
+    ypos - strokewidth / 2 - ybotoff
+  );
+  path.lineTo(
+    xpos + xbotoff + width - strokewidth / 2,
+    ypos - strokewidth / 2 - ybotoff
   );
 
-  //console.log(path);
+  let center = ypos - segmentheight - ytopoff + ytopoff / 2 - ybotoff / 2;
+
+  const middlex = bezPoint(
+    center,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff + ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff - ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff
+  );
+
+  clipBez(
+    center,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff + ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff - ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff,
+    path,
+    false
+  );
+  path.lineTo(middlex + arcwidth / 8, center);
 
   // letter
   if (!update) {
@@ -84,7 +103,6 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
-
     if (cons) {
       svg
         .append("path")
@@ -113,7 +131,5 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
       .attr("d", path)
       .attr("stroke-width", strokewidth);
   }
-
-  //construction lines
 }
-export { r };
+export { two };

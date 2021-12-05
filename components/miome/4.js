@@ -1,12 +1,25 @@
-import { wiggle, karm, bowl } from "./miome_utils";
+import { wiggle, longarc, bezPoint } from "./miome_utils";
+
 import * as d3 from "d3";
 
-function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
-  if (weight > 2) weight = 2;
+function four(
+  svg,
+  x,
+  ypos,
+  xoff,
+  yoff,
+  fontsize,
+  weight,
+  wig,
+  id,
+  update,
+  cons
+) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
   const width = fontsize;
   const path = d3.path();
+  let arcwidth = fontsize / 2 - strokewidth / 2;
   let xpos = x + strokewidth / 2;
   let segmentheight = fontsize / 2;
   let ytopoff, ybotoff, xtopoff, xbotoff;
@@ -24,55 +37,60 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
   //bottom segment -----------------
-  path.moveTo(xpos + xbotoff, ypos - ybotoff);
-  path.lineTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
+  path.moveTo(xpos + width + xbotoff - strokewidth, ypos - ybotoff);
+  path.lineTo(
+    xpos + width + xbotoff - strokewidth,
+    ypos - segmentheight - ybotoff
+  );
 
   //top segment -----------------
-  path.moveTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
-  path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
+  path.moveTo(
+    xpos + width + xtopoff - strokewidth,
+    ypos - segmentheight * 2 - ytopoff
+  );
+  path.lineTo(
+    xpos + width + xtopoff - strokewidth,
+    ypos - segmentheight - ytopoff
+  );
 
-  //left wiggle
+  //right wiggle
   wiggle(
     path,
-    xpos + xtopoff,
+    xpos + width + xtopoff - strokewidth,
     ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
+    xpos + width + xbotoff - strokewidth,
     ypos - segmentheight - ybotoff,
     ctrlHeight
   );
 
-  bowl(
-    path,
+  //middle thing
+  let center = ypos - segmentheight - ytopoff / 2 - ybotoff / 2;
+
+  let middlex;
+  middlex = bezPoint(
+    center,
+    //
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    fontsize / 4,
-    true,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    0
-  );
-
-  karm(
-    path,
-    ypos - ybotoff,
     xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
+    ypos - segmentheight - ytopoff + ctrlHeight,
     xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    fontsize / 2,
-    false,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    false
+    ypos - segmentheight - ybotoff - ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff
   );
 
-  //console.log(path);
+  longarc(
+    path,
+    xpos + xtopoff + width / 2,
+    ypos - segmentheight * 2 - ytopoff,
+    middlex,
+    center,
+    segmentheight + ytopoff / 2 - ybotoff / 2
+  );
+
+  path.moveTo(middlex - strokewidth / 2, center);
+  path.lineTo(middlex + width - strokewidth, center);
 
   // letter
   if (!update) {
@@ -113,7 +131,6 @@ function r(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
       .attr("d", path)
       .attr("stroke-width", strokewidth);
   }
-
-  //construction lines
 }
-export { r };
+
+export { four };

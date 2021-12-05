@@ -1,6 +1,7 @@
+import { arc } from "d3-shape";
 import { GetCubicRoots } from "../../utils/roots";
-
-function bowl2(
+//not done
+function reversebowl(
   path,
   x1,
   y1,
@@ -11,7 +12,8 @@ function bowl2(
   top,
   ybotoff,
   ytopoff,
-  strokewidth
+  strokewidth,
+  middlefactor
 ) {
   //const center = (y1 - y2) / 2;
 
@@ -67,13 +69,13 @@ function bowl2(
       if (ytopoff >= arcwidth * 2 || ybotoff <= -arcwidth * 2) {
         let slopebot = clipBez(
           belcenpt,
-          x1 + arcwidth * 5 - strokewidth,
+          x1 + arcwidth * 4 - strokewidth,
           y1,
-          x1 + arcwidth * 5 - strokewidth,
+          x1 + arcwidth * 4 - strokewidth,
           y1 + ctrlheight,
-          x2 + arcwidth * 5 - strokewidth,
+          x2 + arcwidth * 4 - strokewidth,
           y2 - ctrlheight,
-          x2 + arcwidth * 5 - strokewidth,
+          x2 + arcwidth * 4 - strokewidth,
           y2,
           path,
           false
@@ -84,31 +86,31 @@ function bowl2(
 
         let newxposbot = newarcwidthbot * Math.cos(radiansbot);
 
-        path.moveTo(middlex, center);
+        path.moveTo(middlex + middlefactor, center);
         path.lineTo(belcenptx + arcwidth * 2, center);
 
         path.arc(
-          belcenptx + arcwidth * 5 - strokewidth - newxposbot,
+          belcenptx + arcwidth * 4 - strokewidth - newxposbot,
           center + newarcwidthbot,
           newarcwidthbot,
           (Math.PI * 3) / 2,
           radiansbot
         );
       } else {
-        path.moveTo(middlex, center);
-        path.lineTo(belcenptx + arcwidth * 3, center);
+        path.moveTo(middlex + middlefactor, center);
+        path.lineTo(x2 + arcwidth * 3 - (strokewidth * 3) / 2, center);
       }
     } else {
       if (ytopoff > arcwidth * 2 || ybotoff < -arcwidth * 2) {
         let slopetop = clipBez(
           abvcenpt,
-          x1 + arcwidth * 5 - strokewidth,
+          x1,
           y1,
-          x1 + arcwidth * 5 - strokewidth,
+          x1,
           y1 + ctrlheight,
-          x2 + arcwidth * 5 - strokewidth,
+          x2,
           y2 - ctrlheight,
-          x2 + arcwidth * 5 - strokewidth,
+          x2,
           y2,
           path,
           true
@@ -116,35 +118,42 @@ function bowl2(
         //console.log(slopetop);
 
         let radians = Math.atan(slopetop);
-        let newarcwidth = arcwidth / (Math.sin(-radians) + 1);
+        let newarcwidth = arcwidth / (Math.sin(radians) + 1);
         let newxpos = newarcwidth * Math.cos(radians);
 
+        path.moveTo(
+          abvcenptx + newarcwidth * 2 - newxpos,
+          center - newarcwidth + newarcwidth
+        );
         path.arc(
-          abvcenptx + arcwidth * 5 - strokewidth - newxpos,
+          abvcenptx + newxpos,
           center - newarcwidth,
           newarcwidth,
-          radians,
-          Math.PI / 2
+          //bottom
+          Math.PI / 2,
+          //left
+          Math.PI + radians
         );
+
         //this
-        path.moveTo(middlex, center);
-        path.lineTo(abvcenptx + arcwidth * 5 - strokewidth - newxpos, center);
+        path.moveTo(abvcenptx + newarcwidth * 2 - newxpos, center);
+        path.lineTo(middlex + arcwidth * 4 - strokewidth / 2, center);
       } else {
-        path.moveTo(middlex, center);
-        path.lineTo(abvcenptx + arcwidth * 5 - strokewidth - arcwidth, center);
+        path.moveTo(middlex + arcwidth + middlefactor, center);
+        path.lineTo(middlex + arcwidth * 4 - strokewidth / 2, center);
       }
     }
   } else {
-    path.moveTo(middlex, center);
-    path.lineTo(belcenptx + arcwidth * 4 - strokewidth, center);
+    path.moveTo(middlex + arcwidth + middlefactor, center);
+    path.lineTo(middlex + arcwidth * 4 - strokewidth / 2, center);
   }
 
   if (!top) {
     //bottom arc
-    path.moveTo(x2 + arcwidth * 5 - strokewidth, y2 + arcwidth);
+    path.moveTo(x2 + arcwidth * 4 - strokewidth, y2 + arcwidth);
     path.arc(
-      x2 + arcwidth * 4 - strokewidth,
-      y2 + arcwidth + strokewidth / 2,
+      x2 + arcwidth * 3 - strokewidth,
+      y2 + arcwidth - strokewidth / 2,
       arcwidth,
       0,
       Math.PI / 2
@@ -153,13 +162,13 @@ function bowl2(
     if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
       //bottom bowl top arc
       if (ytopoff <= arcwidth && ybotoff >= -arcwidth) {
-        path.moveTo(x2 + arcwidth * 4 - strokewidth, center - strokewidth / 2);
+        path.moveTo(x2 + arcwidth * 3 - strokewidth, center - strokewidth / 2);
       } else {
-        path.moveTo(x2 + arcwidth * 4 - strokewidth, center - strokewidth / 2);
+        path.moveTo(x2 + arcwidth * 3 - strokewidth, center - strokewidth / 2);
       }
 
       path.arc(
-        x2 + arcwidth * 4 - strokewidth,
+        x2 + arcwidth * 3 - strokewidth,
         center + arcwidth,
         arcwidth,
         (Math.PI * 3) / 2,
@@ -167,75 +176,68 @@ function bowl2(
       );
       if (ytopoff <= arcwidth && ybotoff >= -arcwidth) {
         path.moveTo(
-          x2 + arcwidth * 5 - strokewidth,
+          x2 + arcwidth * 4 - strokewidth,
           center + arcwidth - strokewidth / 2
         );
-        path.lineTo(x2 + arcwidth * 5 - strokewidth, y2 + arcwidth);
+        path.lineTo(x2 + arcwidth * 4 - strokewidth, y2 + arcwidth);
       } else {
         path.moveTo(
-          x2 + arcwidth * 5 - strokewidth,
+          x2 + arcwidth * 4 - strokewidth,
           center + arcwidth - strokewidth / 2
         );
-        path.lineTo(x2 + arcwidth * 5 - strokewidth, y2 + arcwidth);
+        path.lineTo(x2 + arcwidth * 4 - strokewidth, y2 + arcwidth);
       }
     }
 
     //bottom line -----------------
-    path.moveTo(x2, y2 + arcwidth * 2 + strokewidth / 2);
+    path.moveTo(x2, y2 + arcwidth * 2 - strokewidth / 2);
     path.lineTo(
-      x2 + arcwidth * 4 - strokewidth,
-      y2 + arcwidth * 2 + strokewidth / 2
+      x2 + arcwidth * 3 - strokewidth,
+      y2 + arcwidth * 2 - strokewidth / 2
     );
 
     //bottom stem
     if (ytopoff >= arcwidth * 2 || ybotoff <= -arcwidth * 2) {
-      path.moveTo(x2 + arcwidth * 5 - strokewidth, y2);
-      path.lineTo(x2 + arcwidth * 5 - strokewidth, y2 + arcwidth);
+      path.moveTo(x2 + arcwidth * 4 - strokewidth, y2);
+      path.lineTo(x2 + arcwidth * 4 - strokewidth, y2 + arcwidth);
     }
   } else {
     //top arc
-    path.moveTo(
-      x1 + arcwidth * 4 - strokewidth,
-      y1 - arcwidth * 2 - strokewidth / 2
-    );
 
+    path.moveTo(x1, y1 - arcwidth * 1 + strokewidth / 2);
     path.arc(
-      x1 + arcwidth * 4 - strokewidth,
-      y1 - arcwidth - strokewidth / 2,
+      x1 + arcwidth,
+      y1 - arcwidth + strokewidth / 2,
       arcwidth,
-      (Math.PI * 3) / 2,
-      0
+      Math.PI,
+      (Math.PI * 3) / 2
     );
 
     if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
+      path.moveTo(x1, y1 - arcwidth + strokewidth / 2);
+      path.lineTo(x1, abvcenpt);
       //top bowl bottom arc
-      path.moveTo(
-        x1 + arcwidth * 5 - strokewidth,
-        y1 - arcwidth - strokewidth / 2
-      );
+      path.moveTo(x1 + arcwidth, center);
       path.arc(
-        x1 + arcwidth * 4 - strokewidth,
+        x1 + arcwidth,
         center - arcwidth,
         arcwidth,
-        0,
-        Math.PI / 2
+        Math.PI / 2,
+        Math.PI
       );
     }
 
     //top line -----------------
-    path.moveTo(x1, y1 - arcwidth * 2 - strokewidth / 2);
+    path.moveTo(x1 + arcwidth, y1 - arcwidth * 2 + strokewidth / 2);
     path.lineTo(
-      x1 + arcwidth * 4 - strokewidth,
-      y1 - arcwidth * 2 - strokewidth / 2
+      x1 + arcwidth * 4 - strokewidth / 2,
+      y1 - arcwidth * 2 + strokewidth / 2
     );
 
     if (ytopoff >= arcwidth * 2 || ybotoff <= -arcwidth * 2) {
       //top stem ------------------
-      path.moveTo(
-        x1 + arcwidth * 5 - strokewidth,
-        y1 - arcwidth - strokewidth / 2
-      );
-      path.lineTo(x1 + arcwidth * 5 - strokewidth, y1);
+      path.moveTo(x1, y1 - arcwidth + strokewidth / 2);
+      path.lineTo(x1, y1);
     }
   }
 }
@@ -251,7 +253,8 @@ function bowl(
   top,
   ybotoff,
   ytopoff,
-  strokewidth
+  strokewidth,
+  middlefactor
 ) {
   //const center = (y1 - y2) / 2;
 
@@ -324,7 +327,7 @@ function bowl(
 
         let newxposbot = newarcwidthbot * Math.cos(radiansbot);
 
-        path.moveTo(middlex, center);
+        path.moveTo(middlex + middlefactor, center);
         path.lineTo(belcenptx + arcwidth * 2, center);
 
         path.arc(
@@ -335,7 +338,7 @@ function bowl(
           radiansbot
         );
       } else {
-        path.moveTo(middlex, center);
+        path.moveTo(middlex + middlefactor, center);
         path.lineTo(x2 + arcwidth * 3 - (strokewidth * 3) / 2, center);
       }
     } else {
@@ -367,15 +370,15 @@ function bowl(
           Math.PI / 2
         );
         //this
-        path.moveTo(middlex, center);
+        path.moveTo(middlex + middlefactor, center);
         path.lineTo(abvcenptx + arcwidth * 4 - strokewidth - newxpos, center);
       } else {
-        path.moveTo(middlex, center);
+        path.moveTo(middlex + middlefactor, center);
         path.lineTo(abvcenptx + arcwidth * 4 - strokewidth - arcwidth, center);
       }
     }
   } else {
-    path.moveTo(middlex, center);
+    path.moveTo(middlex + middlefactor, center);
     path.lineTo(belcenptx + arcwidth * 3 - strokewidth, center);
   }
 
@@ -768,6 +771,11 @@ function wiggle(path, x1, y1, x2, y2, ctrlheight) {
   path.bezierCurveTo(x1, y1 + ctrlheight, x2, y2 - ctrlheight, x2, y2);
 }
 
+function longarc(path, x1, y1, x2, y2, ctrlheight) {
+  path.moveTo(x1, y1);
+  path.bezierCurveTo(x1, y1 + ctrlheight, x2, y2, x2, y2);
+}
+
 function lerp([x1, y1], [x2, y2], t) {
   const s = 1 - t;
   return [x1 * s + x2 * t, y1 * s + y2 * t];
@@ -822,4 +830,4 @@ function clipBez(ypoint, x1, y1, cpx1, cpy1, cpx2, cpy2, x2, y2, path, seg) {
   return slope;
 }
 
-export { bowl, lerp, clipBez, wiggle, bezPoint, karm, carm };
+export { bowl, lerp, clipBez, wiggle, bezPoint, karm, carm, longarc };

@@ -1,7 +1,7 @@
-import { wiggle, bowl, reversebowl, doublebowl } from "./miome_utils";
+import { wiggle, bowl, closebrack } from "./miome_utils";
 import * as d3 from "d3";
 
-function nine(
+function closeBracket(
   svg,
   x,
   ypos,
@@ -35,34 +35,25 @@ function nine(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  //right wiggle
-  wiggle(
-    path,
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight - ytopoff,
-    xpos + width + xbotoff - strokewidth,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight
-  );
+  //   //bottom segment -----------------
+  //   path.moveTo(xpos + xbotoff, ypos - ybotoff);
+  //   path.lineTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
 
-  //bottom segment -----------------
-  path.moveTo(xpos + width + xbotoff - strokewidth, ypos - ybotoff);
-  path.lineTo(
-    xpos + width + xbotoff - strokewidth,
-    ypos - segmentheight - ybotoff
-  );
+  //   //top segment -----------------
+  //   path.moveTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
+  //   path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
 
-  //top segment -----------------
-  path.moveTo(
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight * 2 - ytopoff
-  );
-  path.lineTo(
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight - ytopoff
-  );
+  //   //left wiggle
+  //   wiggle(
+  //     path,
+  //     xpos + xtopoff,
+  //     ypos - segmentheight - ytopoff,
+  //     xpos + xbotoff,
+  //     ypos - segmentheight - ybotoff,
+  //     ctrlHeight
+  //   );
 
-  doublebowl(
+  closebrack(
     path,
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
@@ -71,6 +62,21 @@ function nine(
     ctrlHeight,
     arcwidth,
     true,
+    ybotoff,
+    ytopoff,
+    strokewidth,
+    0
+  );
+
+  closebrack(
+    path,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff,
+    ctrlHeight,
+    arcwidth,
+    false,
     ybotoff,
     ytopoff,
     strokewidth,
@@ -89,7 +95,6 @@ function nine(
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
-
     if (cons) {
       svg
         .append("path")
@@ -97,14 +102,14 @@ function nine(
         .attr(
           "d",
           `M${x}, ${ypos}L${x}, ${ypos - segmentheight * 2} M${
-            x + fontsize
-          }, ${ypos}L${x + fontsize}, ${
+            x + fontsize / 2
+          }, ${ypos}L${x + fontsize / 2}, ${
             ypos - segmentheight * 2
-          } M${x}, ${ypos}L${x + fontsize}, ${ypos}  M${x}, ${
+          } M${x}, ${ypos}L${x + fontsize / 2}, ${ypos}  M${x}, ${
             ypos - fontsize
-          }L${x + fontsize}, ${ypos - fontsize} M${x}, ${ypos - fontsize / 2}L${
-            x + fontsize
-          }, ${ypos - fontsize / 2}`
+          }L${x + fontsize / 2}, ${ypos - fontsize} M${x}, ${
+            ypos - fontsize / 2
+          }L${x + fontsize / 2}, ${ypos - fontsize / 2}`
         )
         .attr("fill", "none")
         .attr("stroke", "#0088ff")
@@ -119,4 +124,4 @@ function nine(
       .attr("stroke-width", strokewidth);
   }
 }
-export { nine };
+export { closeBracket };

@@ -1,7 +1,7 @@
-import { wiggle, bowl, reversebowl, doublebowl } from "./miome_utils";
+import { wiggle, bowl, bezPoint, clipBez } from "./miome_utils";
 import * as d3 from "d3";
 
-function nine(
+function ques(
   svg,
   x,
   ypos,
@@ -35,34 +35,29 @@ function nine(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  //right wiggle
-  wiggle(
-    path,
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight - ytopoff,
-    xpos + width + xbotoff - strokewidth,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight
-  );
+  //bottom segment -----------------
+  path.moveTo(xpos + xbotoff, ypos - segmentheight / 1.5 - ybotoff);
+  path.lineTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
 
   //bottom segment -----------------
-  path.moveTo(xpos + width + xbotoff - strokewidth, ypos - ybotoff);
-  path.lineTo(
-    xpos + width + xbotoff - strokewidth,
-    ypos - segmentheight - ybotoff
-  );
+  path.moveTo(xpos + xbotoff, ypos - ybotoff);
+  path.lineTo(xpos + xbotoff, ypos - segmentheight / 3 - ybotoff);
 
-  //top segment -----------------
-  path.moveTo(
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight * 2 - ytopoff
-  );
-  path.lineTo(
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight - ytopoff
-  );
+  //   //top segment -----------------
+  //   path.moveTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
+  //   path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
 
-  doublebowl(
+  //   //left wiggle
+  //   wiggle(
+  //     path,
+  //     xpos + xtopoff,
+  //     ypos - segmentheight - ytopoff,
+  //     xpos + xbotoff,
+  //     ypos - segmentheight - ybotoff,
+  //     ctrlHeight
+  //   );
+
+  bowl(
     path,
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
@@ -77,6 +72,34 @@ function nine(
     0
   );
 
+  let center = ypos - segmentheight - ytopoff + ytopoff / 2 - ybotoff / 2;
+
+  const middlex = bezPoint(
+    center,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff + ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff - ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff
+  );
+
+  clipBez(
+    center,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff + ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff - ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff,
+    path,
+    false
+  );
+
   //console.log(path);
 
   // letter
@@ -89,7 +112,6 @@ function nine(
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
-
     if (cons) {
       svg
         .append("path")
@@ -119,4 +141,4 @@ function nine(
       .attr("stroke-width", strokewidth);
   }
 }
-export { nine };
+export { ques };

@@ -1,7 +1,8 @@
-import { wiggle, bowl, reversebowl, doublebowl } from "./miome_utils";
+import { wiggle, bezPoint } from "./miome_utils";
+
 import * as d3 from "d3";
 
-function nine(
+function slash(
   svg,
   x,
   ypos,
@@ -14,9 +15,9 @@ function nine(
   update,
   cons
 ) {
+  //  console.log("called");
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
-  let arcwidth = fontsize / 4;
   const width = fontsize;
   const path = d3.path();
   let xpos = x + strokewidth / 2;
@@ -35,49 +36,55 @@ function nine(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  //right wiggle
-  wiggle(
-    path,
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight - ytopoff,
-    xpos + width + xbotoff - strokewidth,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight
-  );
+  if (ybotoff != 0 || ytopoff != 0) {
+    //bottom segment -----------------
+    path.moveTo(xpos + xbotoff, ypos - ybotoff);
+    path.lineTo(xpos + xbotoff, ypos - segmentheight / 2 - ybotoff);
 
-  //bottom segment -----------------
-  path.moveTo(xpos + width + xbotoff - strokewidth, ypos - ybotoff);
-  path.lineTo(
-    xpos + width + xbotoff - strokewidth,
-    ypos - segmentheight - ybotoff
-  );
+    //top segment -----------------
+    path.moveTo(
+      xpos + width + xtopoff - strokewidth,
+      ypos - segmentheight * 2 - ytopoff
+    );
+    path.lineTo(
+      xpos + width + xtopoff - strokewidth,
+      ypos - (segmentheight * 3) / 2 - ytopoff
+    );
 
-  //top segment -----------------
-  path.moveTo(
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight * 2 - ytopoff
-  );
-  path.lineTo(
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight - ytopoff
-  );
+    //right wiggle
+    wiggle(
+      path,
+      xpos + width + xtopoff - strokewidth,
+      ypos - (segmentheight * 3) / 2 - ytopoff,
+      xpos + xbotoff,
+      ypos - segmentheight / 2 - ybotoff,
+      ctrlHeight
+    );
+  } else {
+    //bottom segment -----------------
+    path.moveTo(xpos + xbotoff, ypos - ybotoff);
+    path.lineTo(xpos + xbotoff, ypos - segmentheight / 2 - ybotoff);
+    path.lineTo(
+      xpos + width + xtopoff - strokewidth,
+      ypos - (segmentheight * 3) / 2 - ytopoff
+    );
+    path.lineTo(
+      xpos + width + xtopoff - strokewidth,
+      ypos - segmentheight * 2 - ytopoff
+    );
 
-  doublebowl(
-    path,
-    xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    true,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    0
-  );
+    // //bottom segment -----------------
+    // path.moveTo(xpos + width + xbotoff - strokewidth, ypos - ybotoff);
+    // path.lineTo(
+    //   xpos + width + xbotoff - strokewidth,
+    //   ypos - segmentheight / 2 - ybotoff
+    // );
+    // path.lineTo(xpos + xtopoff, ypos - (segmentheight * 3) / 2 - ytopoff);
+    // path.lineTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
+  }
 
-  //console.log(path);
+  //middle thing
+  let center = ypos - segmentheight - ytopoff / 2 - ybotoff / 2;
 
   // letter
   if (!update) {
@@ -119,4 +126,5 @@ function nine(
       .attr("stroke-width", strokewidth);
   }
 }
-export { nine };
+
+export { slash };

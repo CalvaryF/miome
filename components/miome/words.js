@@ -43,13 +43,20 @@ function word(
     );
     if (string[i] == "m" || string[i] == "w") {
       offset += fontsize / 3;
-    } else if (string[i] == "i") {
+    } else if (string[i] == "i" || string[i] == "I" || string[i] == "}") {
       offset -= fontsize / 2;
     }
   }
 }
 
-export default function Word({ width, height, fontsize, space, children }) {
+export default function Word({
+  width,
+  height,
+  fontsize,
+  space,
+  weight,
+  children,
+}) {
   const DivRef = useRef(null);
   const SRef = useRef(null);
   useEffect(() => {
@@ -73,9 +80,9 @@ export default function Word({ width, height, fontsize, space, children }) {
 
     const interval = setInterval(() => {
       d3.select(DivRef.current).select("svg").selectAll("path").remove();
-      if (index > 35) {
+      if (index > 25) {
         direction = 1;
-      } else if (index < -35) {
+      } else if (index < -25) {
         direction = -1;
       }
 
@@ -90,21 +97,21 @@ export default function Word({ width, height, fontsize, space, children }) {
         svg,
         120,
         300,
-        index * 0.02,
-        -index * 0.01,
+        -index * 0.02,
+        index * 0.01,
         fontsize,
-        0.2,
+        weight,
         2,
         "a",
         space,
-        true
+        false
       );
     }, 10);
 
     return () => {
       clearInterval(interval);
     };
-  }, [children, fontsize, space]);
+  }, [children, fontsize, space, weight]);
 
   return (
     <div ref={DivRef}>

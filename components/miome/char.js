@@ -1,6 +1,6 @@
 import { m } from "./m";
-import { n } from "./n";
-import { o } from "./o";
+import { n } from "./n2";
+import { o } from "./o2";
 import { i } from "./i";
 import { f } from "./f";
 import { d } from "./d";
@@ -17,11 +17,11 @@ import { z } from "./z";
 import { v } from "./v";
 import { c } from "./c";
 import { s } from "./s";
-import { g } from "./g";
+import { g } from "./g2";
 import { a } from "./a";
 import { j } from "./j";
 import { y } from "./y";
-import { q } from "./q";
+import { q } from "./q2";
 import { w } from "./w";
 import { h } from "./h";
 import { one } from "./1";
@@ -34,6 +34,13 @@ import { seven } from "./7";
 import { eight } from "./8";
 import { nine } from "./9";
 import { zero } from "./0";
+import { star } from "./star";
+import { percent } from "./percent";
+import { dollar } from "./dollar";
+import { at } from "./at";
+import { ques } from "./ques";
+import { slash } from "./slash";
+import { closeBracket } from "./closeBracket";
 
 export default function char(
   string,
@@ -307,6 +314,100 @@ export default function char(
       break;
     case "0":
       zero(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+      break;
+    case "*":
+      star(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "%":
+      percent(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "$":
+      dollar(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "@":
+      at(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      break;
+    case "?":
+      ques(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "/":
+      slash(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "}":
+      closeBracket(
         svg,
         xpos,
         ypos,

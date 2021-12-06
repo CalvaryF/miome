@@ -52,7 +52,8 @@ function p(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
     true,
     ybotoff,
     ytopoff,
-    strokewidth
+    strokewidth,
+    0
   );
 
   //console.log(path);

@@ -2,7 +2,7 @@ import { wiggle, bezPoint } from "./miome_utils";
 
 import * as d3 from "d3";
 
-function seven(
+function percent(
   svg,
   x,
   ypos,
@@ -36,19 +36,26 @@ function seven(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  //top line -----------------
-  path.moveTo(
-    xpos + xtopoff - strokewidth / 2,
-    ypos - segmentheight * 2 + strokewidth / 2 - ytopoff
-  );
-  path.lineTo(
-    xpos + xtopoff + width - strokewidth / 2,
-    ypos - segmentheight * 2 + strokewidth / 2 - ytopoff
+  path.arc(
+    xpos + xtopoff + fontsize / 4,
+    ypos - segmentheight * 2 - ytopoff + fontsize / 4,
+    fontsize / 4,
+    Math.PI,
+    Math.PI * 4
   );
 
-  //top segment -----------------
-  path.moveTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
-  path.lineTo(xpos + xtopoff, ypos - (segmentheight * 3) / 2 - ytopoff);
+  path.moveTo(
+    xpos + xbotoff + fontsize / 4 + fontsize / 4 - strokewidth,
+    ypos - ybotoff - fontsize / 4
+  );
+
+  path.arc(
+    xpos + xbotoff + fontsize / 4 + fontsize / 2 - strokewidth,
+    ypos - ybotoff - fontsize / 4,
+    fontsize / 4,
+    Math.PI,
+    Math.PI * 4
+  );
 
   if (ybotoff != 0 || ytopoff != 0) {
     //bottom segment -----------------
@@ -141,4 +148,4 @@ function seven(
   }
 }
 
-export { seven };
+export { percent };

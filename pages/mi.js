@@ -26,13 +26,19 @@ export default function Home() {
   const [content, setContent] = useState(50);
   const [width, setWidth] = useState(1200);
   const [height, setHeight] = useState(600);
-  const [In, setIn] = useState("2");
+  const [In, setIn] = useState("8");
 
   return (
     <Bg>
       <SBox w={width} h={height}>
         <input onChange={(e) => setIn(e.target.value)}></input>
-        <Word fontsize={130} space={20} width={width} height={height}>
+        <Word
+          fontsize={80}
+          space={20}
+          weight={0.2}
+          width={width}
+          height={height}
+        >
           {In}
         </Word>
       </SBox>

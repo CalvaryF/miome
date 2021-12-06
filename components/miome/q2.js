@@ -1,19 +1,7 @@
 import { wiggle, carm } from "./miome_utils";
 import * as d3 from "d3";
 
-function zero(
-  svg,
-  x,
-  ypos,
-  xoff,
-  yoff,
-  fontsize,
-  weight,
-  wig,
-  id,
-  update,
-  cons
-) {
+function q(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
   let arcwidth = fontsize / 4;
@@ -79,15 +67,15 @@ function zero(
     ctrlHeight
   );
 
-  //right wiggle
-  wiggle(
-    path,
-    xpos + width + xtopoff - strokewidth,
-    ypos - (segmentheight * 3) / 2 - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight / 2 - ybotoff,
-    ctrlHeight
-  );
+  //   //right wiggle
+  //   wiggle(
+  //     path,
+  //     xpos + width + xtopoff - strokewidth,
+  //     ypos - (segmentheight * 3) / 2 - ytopoff,
+  //     xpos + xbotoff,
+  //     ypos - segmentheight / 2 - ybotoff,
+  //     ctrlHeight
+  //   );
 
   //right wiggle
   wiggle(
@@ -127,6 +115,17 @@ function zero(
     ytopoff,
     strokewidth,
     true
+  );
+
+  arcwidth = arcwidth * 2;
+  path.moveTo(xpos + arcwidth + xbotoff, ypos - arcwidth - ybotoff);
+  path.bezierCurveTo(
+    xpos + xbotoff + arcwidth + fontsize / 2,
+    ypos - ybotoff - arcwidth,
+    xpos + xbotoff + arcwidth * 2.5 - fontsize / 2,
+    ypos - ybotoff - strokewidth / 2,
+    xpos + xbotoff + arcwidth * 2.5,
+    ypos - ybotoff - strokewidth / 2
   );
 
   //console.log(path);
@@ -172,4 +171,4 @@ function zero(
       .attr("stroke-width", strokewidth);
   }
 }
-export { zero };
+export { q };

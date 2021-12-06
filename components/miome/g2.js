@@ -1,19 +1,7 @@
-import { wiggle, bowl, reversebowl, doublebowl } from "./miome_utils";
+import { wiggle, carm } from "./miome_utils";
 import * as d3 from "d3";
 
-function nine(
-  svg,
-  x,
-  ypos,
-  xoff,
-  yoff,
-  fontsize,
-  weight,
-  wig,
-  id,
-  update,
-  cons
-) {
+function g(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
   let arcwidth = fontsize / 4;
@@ -35,34 +23,21 @@ function nine(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  //right wiggle
+  //bottom segment -----------------
+  path.moveTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
+  path.lineTo(xpos + xbotoff, ypos - segmentheight + strokewidth / 2 - ybotoff);
+
+  //left wiggle
   wiggle(
     path,
-    xpos + width + xtopoff - strokewidth,
+    xpos + xtopoff,
     ypos - segmentheight - ytopoff,
-    xpos + width + xbotoff - strokewidth,
+    xpos + xbotoff,
     ypos - segmentheight - ybotoff,
     ctrlHeight
   );
 
-  //bottom segment -----------------
-  path.moveTo(xpos + width + xbotoff - strokewidth, ypos - ybotoff);
-  path.lineTo(
-    xpos + width + xbotoff - strokewidth,
-    ypos - segmentheight - ybotoff
-  );
-
-  //top segment -----------------
-  path.moveTo(
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight * 2 - ytopoff
-  );
-  path.lineTo(
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight - ytopoff
-  );
-
-  doublebowl(
+  carm(
     path,
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
@@ -74,7 +49,65 @@ function nine(
     ybotoff,
     ytopoff,
     strokewidth,
-    0
+    true
+  );
+
+  //top segment -----------------
+  path.moveTo(
+    xpos + xtopoff,
+    ypos - (segmentheight * 3) / 2 - ytopoff + strokewidth / 2
+  );
+  path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
+
+  path.moveTo(
+    xpos + arcwidth * 2 + xbotoff,
+    ypos - segmentheight + strokewidth / 2 - ybotoff
+  );
+
+  //bottom segment -----------------
+  path.moveTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
+  path.lineTo(
+    xpos + xbotoff,
+    ypos - segmentheight / 2 - ybotoff - strokewidth / 2
+  );
+
+  //   path.moveTo(
+  //     xpos + arcwidth * 2 + xbotoff - strokewidth,
+  //     ypos - segmentheight + strokewidth / 2 - ybotoff
+  //   );
+  //   //bottom arc
+  //   path.arc(
+  //     xpos + arcwidth * 2 + xbotoff - strokewidth,
+  //     ypos - segmentheight - strokewidth / 2 - ybotoff,
+  //     arcwidth * 2,
+  //     0,
+  //     Math.PI / 2
+  //   );
+
+  path.moveTo(
+    xpos + arcwidth * 2 + xbotoff - strokewidth,
+    ypos - segmentheight - ybotoff
+  );
+
+  path.lineTo(
+    xpos + arcwidth * 4 + xbotoff - strokewidth,
+    ypos - segmentheight - ybotoff
+  );
+  path.lineTo(xpos + arcwidth * 4 + xbotoff - strokewidth, ypos - ybotoff);
+
+  carm(
+    path,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff,
+    ctrlHeight,
+    arcwidth,
+    false,
+    ybotoff,
+    ytopoff,
+    strokewidth,
+    true
   );
 
   //console.log(path);
@@ -119,4 +152,4 @@ function nine(
       .attr("stroke-width", strokewidth);
   }
 }
-export { nine };
+export { g };

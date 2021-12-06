@@ -1,19 +1,7 @@
-import { wiggle, carm } from "./miome_utils";
+import { wiggle, carm, bezPoint, clipBez } from "./miome_utils";
 import * as d3 from "d3";
 
-function zero(
-  svg,
-  x,
-  ypos,
-  xoff,
-  yoff,
-  fontsize,
-  weight,
-  wig,
-  id,
-  update,
-  cons
-) {
+function at(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
   let arcwidth = fontsize / 4;
@@ -49,15 +37,15 @@ function zero(
   );
   path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
 
-  //bottom segment -----------------
-  path.moveTo(
-    xpos + width - strokewidth + xbotoff,
-    ypos - segmentheight - ybotoff
-  );
-  path.lineTo(
-    xpos + width - strokewidth + xbotoff,
-    ypos - segmentheight / 2 - ybotoff - strokewidth / 2
-  );
+  //   //bottom segment -----------------
+  //   path.moveTo(
+  //     xpos + width - strokewidth + xbotoff,
+  //     ypos - segmentheight - ybotoff
+  //   );
+  //   path.lineTo(
+  //     xpos + width - strokewidth + xbotoff,
+  //     ypos - segmentheight / 2 - ybotoff - strokewidth / 2
+  //   );
 
   //top segment -----------------
   path.moveTo(
@@ -79,25 +67,34 @@ function zero(
     ctrlHeight
   );
 
-  //right wiggle
-  wiggle(
-    path,
-    xpos + width + xtopoff - strokewidth,
-    ypos - (segmentheight * 3) / 2 - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight / 2 - ybotoff,
-    ctrlHeight
+  let center = ypos - segmentheight - ytopoff + ytopoff / 2 - ybotoff / 2;
+
+  const middlex = bezPoint(
+    center,
+    xpos + xtopoff + width,
+    ypos - segmentheight - ytopoff,
+    xpos + xtopoff + width,
+    ypos - segmentheight - ytopoff + ctrlHeight,
+    xpos + xbotoff + width,
+    ypos - segmentheight - ybotoff - ctrlHeight,
+    xpos + xbotoff + width,
+    ypos - segmentheight - ybotoff
   );
 
-  //right wiggle
-  wiggle(
-    path,
-    xpos + width + xtopoff - strokewidth,
+  clipBez(
+    center,
+    xpos + xtopoff + width - strokewidth,
     ypos - segmentheight - ytopoff,
-    xpos + width + xbotoff - strokewidth,
+    xpos + xtopoff + width - strokewidth,
+    ypos - segmentheight - ytopoff + ctrlHeight,
+    xpos + xbotoff + width - strokewidth,
+    ypos - segmentheight - ybotoff - ctrlHeight,
+    xpos + xbotoff + width - strokewidth,
     ypos - segmentheight - ybotoff,
-    ctrlHeight
+    path,
+    true
   );
+  path.lineTo(middlex - fontsize / 2, center);
 
   carm(
     path,
@@ -127,6 +124,35 @@ function zero(
     ytopoff,
     strokewidth,
     true
+  );
+
+  wiggle(
+    path,
+    xpos + xtopoff + width / 2 - strokewidth / 2,
+    ypos - segmentheight - ytopoff,
+    xpos + xbotoff + width / 2 - strokewidth / 2,
+    ypos - segmentheight - ybotoff,
+    ctrlHeight
+  );
+
+  //bottom segment -----------------
+  path.moveTo(
+    xpos + xbotoff + width / 2 - strokewidth / 2,
+    ypos - ybotoff - segmentheight
+  );
+  path.lineTo(
+    xpos + xbotoff + width / 2 - strokewidth / 2,
+    ypos - segmentheight / 2 - ybotoff
+  );
+
+  //top segment -----------------
+  path.moveTo(
+    xpos + xtopoff + width / 2 - strokewidth / 2,
+    ypos - segmentheight * 1.5 - ytopoff
+  );
+  path.lineTo(
+    xpos + xtopoff + width / 2 - strokewidth / 2,
+    ypos - segmentheight - ytopoff
   );
 
   //console.log(path);
@@ -172,4 +198,4 @@ function zero(
       .attr("stroke-width", strokewidth);
   }
 }
-export { zero };
+export { at };

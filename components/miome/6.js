@@ -1,5 +1,11 @@
-import { wiggle, bezPoint } from "./miome_utils";
-
+import {
+  wiggle,
+  bowl,
+  reversebowl,
+  clipBez,
+  bezPoint,
+  carm,
+} from "./miome_utils";
 import * as d3 from "d3";
 
 function six(
@@ -17,6 +23,7 @@ function six(
 ) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
+  let arcwidth = fontsize / 4;
   const width = fontsize;
   const path = d3.path();
   let xpos = x + strokewidth / 2;
@@ -35,58 +42,47 @@ function six(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  //bottom segment -----------------
-  path.moveTo(xpos + xbotoff, ypos - ybotoff);
-  path.lineTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
-
-  //top segment -----------------
-  path.moveTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
-  path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
-
-  //bottom segment -----------------
-  path.moveTo(xpos + width + xbotoff - strokewidth, ypos - ybotoff);
-  path.lineTo(
-    xpos + width + xbotoff - strokewidth,
-    ypos - segmentheight - ybotoff
-  );
-
-  //top segment -----------------
-  path.moveTo(
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight * 2 - ytopoff
-  );
-  path.lineTo(
-    xpos + width + xtopoff - strokewidth,
-    ypos - segmentheight - ytopoff
-  );
-
-  //left wiggle
-  wiggle(
+  bowl(
     path,
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
     xpos + xbotoff,
     ypos - segmentheight - ybotoff,
-    ctrlHeight
+    ctrlHeight,
+    arcwidth,
+    false,
+    ybotoff,
+    ytopoff,
+    strokewidth,
+    0
   );
 
-  //right wiggle
-  wiggle(
+  carm(
     path,
-    xpos + width + xtopoff - strokewidth,
+    xpos + xtopoff,
     ypos - segmentheight - ytopoff,
-    xpos + width + xbotoff - strokewidth,
+    xpos + xbotoff,
     ypos - segmentheight - ybotoff,
-    ctrlHeight
+    ctrlHeight,
+    arcwidth,
+    true,
+    ybotoff,
+    ytopoff,
+    strokewidth,
+    true
   );
 
-  //middle thing
-  let center = ypos - segmentheight - ytopoff / 2 - ybotoff / 2;
+  //top segment -----------------
+  path.moveTo(
+    xpos + xtopoff,
+    ypos - (segmentheight * 3) / 2 - ytopoff + strokewidth / 2
+  );
+  path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
 
-  let middlex;
-  middlex = bezPoint(
+  let center = ypos - segmentheight - ytopoff + ytopoff / 2 - ybotoff / 2;
+
+  const middlex = bezPoint(
     center,
-    //
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
     xpos + xtopoff,
@@ -97,8 +93,19 @@ function six(
     ypos - segmentheight - ybotoff
   );
 
-  path.moveTo(middlex, center);
-  path.lineTo(middlex + width - strokewidth, center);
+  wiggle(
+    path,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff,
+    ctrlHeight
+  );
+  //path.lineTo(middlex + arcwidth / 8, center);
+
+  //bottom segment -----------------
+  path.moveTo(xpos + xbotoff, ypos - ybotoff);
+  path.lineTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
 
   // letter
   if (!update) {
@@ -110,7 +117,6 @@ function six(
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
-
     if (cons) {
       svg
         .append("path")
@@ -140,5 +146,4 @@ function six(
       .attr("stroke-width", strokewidth);
   }
 }
-
 export { six };

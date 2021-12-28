@@ -328,7 +328,8 @@ function bowl(
         let newxposbot = newarcwidthbot * Math.cos(radiansbot);
 
         path.moveTo(middlex + middlefactor, center);
-        path.lineTo(belcenptx + arcwidth, center);
+        // path.lineTo(middlex + middlefactor + 50, center);
+        // path.lineTo(belcenptx + arcwidth, center);
 
         path.arc(
           belcenptx + arcwidth * 4 - strokewidth - newxposbot,
@@ -607,8 +608,15 @@ function doublebowl(
         path.moveTo(x2, y2);
         path.lineTo(x2, y2 + arcwidth);
       } else {
-        path.moveTo(middlex + arcwidth, center);
-        path.lineTo(x2 + arcwidth * 3 - (strokewidth * 3) / 2, center);
+        //this
+        // path.moveTo(middlex + arcwidth, center);
+        // path.lineTo(x2 + arcwidth * 3 - (strokewidth * 3) / 2, center);
+
+        path.moveTo(x2 + arcwidth, center);
+        path.lineTo(x2 + arcwidth * 2 + strokewidth, center);
+
+        //    path.moveTo(belcenptx + arcwidth, center);
+        //   path.lineTo(belcenptx + arcwidth * 4 - strokewidth - arcwidth, center);
       }
     } else {
       if (ytopoff > arcwidth * 2 || ybotoff < -arcwidth * 2) {
@@ -711,7 +719,7 @@ function doublebowl(
 
     if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
       //left segment
-      path.moveTo(x2, y2 + arcwidth + strokewidth / 2);
+      path.moveTo(x2, y2 + arcwidth - strokewidth / 2);
       path.lineTo(x2, center + arcwidth);
 
       //bottom bowl top arc
@@ -844,6 +852,7 @@ function doublebowl(
 }
 
 function closebrack(
+  svg,
   path,
   x1,
   y1,
@@ -912,43 +921,51 @@ function closebrack(
   let leftnewxpos = 0;
   let leftnewxposbot = 0;
   if (ybotoff != 0 || ytopoff != 0) {
-    if (true) {
-      if (ytopoff >= arcwidth * 2 || ybotoff <= -arcwidth * 2) {
-        let slopebot = clipBez(
-          belcenpt,
-          x1,
-          y1,
-          x1,
-          y1 + ctrlheight,
-          x2,
-          y2 - ctrlheight,
-          x2,
-          y2,
-          path,
-          false
-        );
+    if (
+      ytopoff > arcwidth * 2 ||
+      ybotoff < -arcwidth * 2 ||
+      ytopoff > arcwidth * 2 ||
+      ybotoff < -arcwidth * 2
+    ) {
+      let slopebot = clipBez(
+        belcenpt,
+        x1,
+        y1,
+        x1,
+        y1 + ctrlheight,
+        x2,
+        y2 - ctrlheight,
+        x2,
+        y2,
+        path,
+        false
+      );
 
-        let radiansbot = Math.atan(slopebot);
+      let radiansbot = Math.atan(slopebot);
 
-        leftnewarcwidthbot = arcwidth / (Math.sin(-radiansbot) + 1);
-        leftnewxposbot = leftnewarcwidthbot * Math.cos(radiansbot);
+      leftnewarcwidthbot = arcwidth / (Math.sin(-radiansbot) + 1);
+      leftnewxposbot = leftnewarcwidthbot * Math.cos(radiansbot);
 
-        //  path.moveTo(belcenptx + leftnewxposbot, center);
-        path.arc(
-          belcenptx + leftnewxposbot,
-          center + leftnewarcwidthbot,
-          leftnewarcwidthbot,
-          //bottom
-          Math.PI + radiansbot,
-          (Math.PI * 3) / 2
-          //left
-        );
+      //  path.moveTo(belcenptx + leftnewxposbot, center);
+      path.arc(
+        belcenptx + leftnewxposbot,
+        center + leftnewarcwidthbot,
+        leftnewarcwidthbot,
+        //bottom
+        Math.PI + radiansbot,
+        (Math.PI * 3) / 2
+        //left
+      );
 
-        path.moveTo(x2, y2);
-        path.lineTo(x2, y2 + arcwidth);
-      }
-    }
-    if (ytopoff > arcwidth * 2 || ybotoff < -arcwidth * 2) {
+      path.moveTo(x2, y2);
+      path.lineTo(x2, y2 + arcwidth);
+
+      // svg
+      //   .append("circle")
+      //   .attr("cx", belcenptx + leftnewxposbot)
+      //   .attr("cy", center)
+      //   .attr("fill", "blue")
+      //   .attr("r", "10px");
       let slopetop = clipBez(
         abvcenpt,
         x1,
@@ -981,92 +998,568 @@ function closebrack(
 
       path.moveTo(x1, y1);
       path.lineTo(x1, y1 - arcwidth);
+
+      // svg
+      //   .append("circle")
+      //   .attr("cx", abvcenptx + leftnewxpos)
+      //   .attr("cy", center)
+      //   .attr("fill", "orange")
+      //   .attr("r", "10px");
+      path.moveTo(belcenptx + leftnewxposbot, center);
+      path.lineTo(abvcenptx + leftnewxpos, center);
     }
   }
 
-  if (
-    ytopoff > arcwidth * 2 ||
-    ybotoff < -arcwidth * 2 ||
-    ytopoff > arcwidth * 2 ||
-    ybotoff < -arcwidth * 2
-  ) {
-    path.moveTo(belcenptx + leftnewxposbot, center);
-    path.lineTo(abvcenptx + leftnewxpos, center);
+  //bottom arc
+  path.moveTo(x2, y2 + arcwidth);
+  path.arc(
+    x2 - arcwidth,
+    y2 + arcwidth - strokewidth / 2,
+    arcwidth,
+    0,
+    Math.PI / 2
+  );
+
+  if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
+    //left segment
+    path.moveTo(x2, y2 + arcwidth);
+    path.lineTo(x2, center + arcwidth);
+
+    //bottom bowl top arc
+    if (ytopoff <= arcwidth && ybotoff >= -arcwidth) {
+      path.moveTo(x2 + arcwidth * 3 - strokewidth, center - strokewidth / 2);
+    } else {
+      path.moveTo(x2 + arcwidth * 3 - strokewidth, center - strokewidth / 2);
+    }
+
+    path.moveTo(x2, center + arcwidth);
+    path.arc(
+      x2 + arcwidth,
+      center + arcwidth,
+      arcwidth,
+      Math.PI,
+      (Math.PI * 3) / 2
+    );
   }
 
-  if (!top) {
-    path.moveTo(x2, y2 + arcwidth);
+  //top arc
+  path.moveTo(x1 - arcwidth, y1 - arcwidth * 2 + strokewidth / 2);
+  path.arc(
+    x1 - arcwidth,
+    y1 - arcwidth + strokewidth / 2,
+    arcwidth,
+    (Math.PI * 3) / 2,
+    0
+  );
+  path.moveTo(
+    x1 + arcwidth * 3 - strokewidth,
+    y1 - arcwidth * 2 + strokewidth / 2
+  );
+
+  if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
+    //left segment
+    path.moveTo(x1, y1 - arcwidth + strokewidth / 2);
+    path.lineTo(x1, center - arcwidth);
+
+    path.moveTo(x1 + arcwidth, center);
+    path.arc(x1 + arcwidth, center - arcwidth, arcwidth, Math.PI / 2, Math.PI);
+
+    path.moveTo(x1 + arcwidth, center);
+    path.lineTo(x2 + arcwidth, center);
+  }
+}
+
+function openbrack(
+  svg,
+  path,
+  x1,
+  y1,
+  x2,
+  y2,
+  ctrlheight,
+  arcwidth,
+  top,
+  ybotoff,
+  ytopoff,
+  strokewidth,
+  middlefactor
+) {
+  //const center = (y1 - y2) / 2;
+  x1 = x1 - arcwidth * 3 + strokewidth / 2;
+  x2 = x2 - arcwidth * 3 + strokewidth / 2;
+
+  let center = y1 + ytopoff / 2 - ybotoff / 2;
+
+  //center = 400;
+
+  let middlex = bezPoint(
+    center,
+    //
+    x1,
+    y1,
+    x1,
+    y1 + ctrlheight,
+    x2,
+    y2 - ctrlheight,
+    x2,
+    y2
+  );
+  let belcenpt, abvcenpt;
+
+  belcenpt = center + arcwidth;
+  abvcenpt = center - arcwidth;
+
+  let belcenptx = bezPoint(
+    belcenpt,
+    //
+    x1,
+    y1,
+    x1,
+    y1 + ctrlheight,
+    x2,
+    y2 - ctrlheight,
+    x2,
+    y2
+  );
+
+  let abvcenptx = bezPoint(
+    abvcenpt,
+    //
+    x1,
+    y1,
+    x1,
+    y1 + ctrlheight,
+    x2,
+    y2 - ctrlheight,
+    x2,
+    y2
+  );
+
+  if (ybotoff != 0 || ytopoff != 0) {
+    if (
+      ytopoff > arcwidth * 2 ||
+      ybotoff < -arcwidth * 2 ||
+      ytopoff > arcwidth * 2 ||
+      ybotoff < -arcwidth * 2
+    ) {
+      let slopebot = clipBez(
+        belcenpt,
+        x1 + arcwidth * 4 - strokewidth,
+        y1,
+        x1 + arcwidth * 4 - strokewidth,
+        y1 + ctrlheight,
+        x2 + arcwidth * 4 - strokewidth,
+        y2 - ctrlheight,
+        x2 + arcwidth * 4 - strokewidth,
+        y2,
+        path,
+        false
+      );
+
+      let radiansbot = Math.atan(slopebot);
+      let newarcwidthbot = arcwidth / (Math.sin(radiansbot) + 1);
+      let newxposbot = newarcwidthbot * Math.cos(radiansbot);
+
+      let leftnewarcwidthbot = arcwidth / (Math.sin(-radiansbot) + 1);
+      let leftnewxposbot = leftnewarcwidthbot * Math.cos(radiansbot);
+
+      path.moveTo(belcenptx + arcwidth * 4 - strokewidth - newxposbot, center);
+
+      path.arc(
+        belcenptx + arcwidth * 4 - strokewidth - newxposbot,
+        center + newarcwidthbot,
+        newarcwidthbot,
+        (Math.PI * 3) / 2,
+        radiansbot
+      );
+
+      // svg
+      //   .append("circle")
+      //   .attr("cx", belcenptx + arcwidth * 4 - strokewidth - newxposbot)
+      //   .attr("cy", center)
+      //   .attr("fill", "blue")
+      //   .attr("r", "10px");
+
+      let slopetop = clipBez(
+        abvcenpt,
+        x1 + arcwidth * 4 - strokewidth,
+        y1,
+        x1 + arcwidth * 4 - strokewidth,
+        y1 + ctrlheight,
+        x2 + arcwidth * 4 - strokewidth,
+        y2 - ctrlheight,
+        x2 + arcwidth * 4 - strokewidth,
+        y2,
+        path,
+        true
+      );
+
+      let radians = Math.atan(slopetop);
+      let newarcwidth = arcwidth / (Math.sin(-radians) + 1);
+      let newxpos = newarcwidth * Math.cos(radians);
+
+      let leftnewarcwidth = arcwidth / (Math.sin(radians) + 1);
+      let leftnewxpos = leftnewarcwidth * Math.cos(radians);
+
+      path.arc(
+        abvcenptx + arcwidth * 4 - strokewidth - newxpos,
+        center - newarcwidth,
+        newarcwidth,
+        radians,
+        Math.PI / 2
+      );
+
+      // svg
+      //   .append("circle")
+      //   .attr("cx", abvcenptx + arcwidth * 4 - strokewidth - newxpos)
+      //   .attr("cy", center)
+      //   .attr("fill", "orange")
+      //   .attr("r", "10px");
+
+      path.moveTo(abvcenptx + arcwidth * 4 - strokewidth - newxpos, center);
+      path.lineTo(belcenptx + arcwidth * 4 - strokewidth - newxposbot, center);
+    }
+  }
+
+  //bottom arc
+  path.moveTo(
+    x2 + arcwidth * 5 - strokewidth,
+    y2 + arcwidth * 2 - strokewidth / 2
+  );
+  path.arc(
+    x2 + arcwidth * 5 - strokewidth,
+    y2 + arcwidth - strokewidth / 2,
+    arcwidth,
+    Math.PI / 2,
+    Math.PI
+  );
+
+  if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
+    //bottom bowl top arc
+    if (ytopoff <= arcwidth && ybotoff >= -arcwidth) {
+      path.moveTo(x2 + arcwidth * 3 - strokewidth, center - strokewidth / 2);
+    } else {
+      path.moveTo(x2 + arcwidth * 3 - strokewidth, center - strokewidth / 2);
+    }
+
     path.arc(
-      x2 - arcwidth,
-      y2 + arcwidth - strokewidth / 2,
+      x2 + arcwidth * 3 - strokewidth,
+      center + arcwidth,
+      arcwidth,
+      (Math.PI * 3) / 2,
+      0
+    );
+
+    // svg
+    //   .append("circle")
+    //   .attr("cx", x2 + arcwidth * 3 - strokewidth)
+    //   .attr("cy", center)
+    //   .attr("fill", "blue")
+    //   .attr("r", "10px");
+
+    if (ytopoff <= arcwidth && ybotoff >= -arcwidth) {
+      path.moveTo(
+        x2 + arcwidth * 4 - strokewidth,
+        center + arcwidth - strokewidth / 2
+      );
+      path.lineTo(x2 + arcwidth * 4 - strokewidth, y2 + arcwidth);
+    } else {
+      path.moveTo(
+        x2 + arcwidth * 4 - strokewidth,
+        center + arcwidth - strokewidth / 2
+      );
+      path.lineTo(x2 + arcwidth * 4 - strokewidth, y2 + arcwidth);
+    }
+  }
+
+  //bottom stem
+  if (ytopoff >= arcwidth * 2 || ybotoff <= -arcwidth * 2) {
+    path.moveTo(x2 + arcwidth * 4 - strokewidth, y2);
+    path.lineTo(x2 + arcwidth * 4 - strokewidth, y2 + arcwidth);
+  }
+
+  //top arc
+  path.moveTo(x1 + arcwidth * 4 - strokewidth, y1 - arcwidth + strokewidth / 2);
+
+  path.arc(
+    x1 + arcwidth * 5 - strokewidth,
+    y1 - arcwidth + strokewidth / 2,
+    arcwidth,
+    Math.PI,
+    (Math.PI * 3) / 2
+  );
+
+  if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
+    //top bowl bottom arc
+    path.moveTo(
+      x1 + arcwidth * 4 - strokewidth,
+      y1 - arcwidth + strokewidth / 2
+    );
+    path.arc(
+      x1 + arcwidth * 3 - strokewidth,
+      center - arcwidth,
       arcwidth,
       0,
       Math.PI / 2
     );
 
-    if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
-      //left segment
-      path.moveTo(x2, y2 + arcwidth + strokewidth / 2);
-      path.lineTo(x2, center + arcwidth);
+    // svg
+    //   .append("circle")
+    //   .attr("cx", x1 + arcwidth * 3 - strokewidth)
+    //   .attr("cy", center)
+    //   .attr("fill", "orange")
+    //   .attr("r", "10px");
+  }
 
-      //bottom bowl top arc
-      if (ytopoff <= arcwidth && ybotoff >= -arcwidth) {
-        path.moveTo(x2 + arcwidth * 3 - strokewidth, center - strokewidth / 2);
-      } else {
-        path.moveTo(x2 + arcwidth * 3 - strokewidth, center - strokewidth / 2);
-      }
+  if (
+    (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) ||
+    (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2)
+  ) {
+    path.moveTo(x1 + arcwidth * 3 - strokewidth, center);
+    path.lineTo(x2 + arcwidth * 3 - strokewidth, center);
+  }
 
-      path.moveTo(x2, center + arcwidth);
-      path.arc(
-        x2 + arcwidth,
-        center + arcwidth,
-        arcwidth,
-        Math.PI,
-        (Math.PI * 3) / 2
-      );
-      if (ybotoff != 0 || ytopoff != 0) {
-        path.moveTo(x2 + arcwidth, center);
-        path.lineTo(x2 + arcwidth * 1.2, center);
-      }
-    }
-  } else {
-    path.moveTo(x1 - arcwidth, y1 - arcwidth * 2 + strokewidth / 2);
-    path.arc(
-      x1 - arcwidth,
-      y1 - arcwidth + strokewidth / 2,
-      arcwidth,
-      (Math.PI * 3) / 2,
-      0
-    );
-
-    path.moveTo(x1 - arcwidth, y1 - arcwidth * 2 + strokewidth / 2);
-    path.arc(
-      x1 - arcwidth,
-      y1 - arcwidth + strokewidth / 2,
-      arcwidth,
-      (Math.PI * 3) / 2,
-      0
-    );
-    //top arc
+  if (ytopoff >= arcwidth * 2 || ybotoff <= -arcwidth * 2) {
+    //top stem ------------------
     path.moveTo(
-      x1 + arcwidth * 3 - strokewidth,
-      y1 - arcwidth * 2 + strokewidth / 2
+      x1 + arcwidth * 4 - strokewidth,
+      y1 - arcwidth + strokewidth / 2
     );
+    path.lineTo(x1 + arcwidth * 4 - strokewidth, y1);
+  }
+}
 
-    if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
-      //left segment
-      path.moveTo(x1, y1 - arcwidth + strokewidth / 2);
-      path.lineTo(x1, center - arcwidth);
+function amp(
+  svg,
+  path,
+  x1,
+  y1,
+  x2,
+  y2,
+  ctrlheight,
+  arcwidth,
+  top,
+  ybotoff,
+  ytopoff,
+  strokewidth,
+  middlefactor
+) {
+  //const center = (y1 - y2) / 2;
+  x1 += -strokewidth / 2;
+  x2 += -strokewidth / 2;
 
-      path.moveTo(x1 + arcwidth, center);
-      path.arc(
-        x1 + arcwidth,
-        center - arcwidth,
-        arcwidth,
-        Math.PI / 2,
-        Math.PI
+  let center = y1 + ytopoff / 2 - ybotoff / 2;
+
+  //center = 400;
+
+  let middlex = bezPoint(
+    center,
+    //
+    x1,
+    y1,
+    x1,
+    y1 + ctrlheight,
+    x2,
+    y2 - ctrlheight,
+    x2,
+    y2
+  );
+  let belcenpt, abvcenpt;
+
+  belcenpt = center + arcwidth;
+  abvcenpt = center - arcwidth;
+
+  let belcenptx = bezPoint(
+    belcenpt,
+    //
+    x1,
+    y1,
+    x1,
+    y1 + ctrlheight,
+    x2,
+    y2 - ctrlheight,
+    x2,
+    y2
+  );
+
+  let abvcenptx = bezPoint(
+    abvcenpt,
+    //
+    x1,
+    y1,
+    x1,
+    y1 + ctrlheight,
+    x2,
+    y2 - ctrlheight,
+    x2,
+    y2
+  );
+  let leftnewarcwidth = 0;
+  let leftnewarcwidthbot = 0;
+  let leftnewxpos = 0;
+  let leftnewxposbot = 0;
+  if (ybotoff != 0 || ytopoff != 0) {
+    if (
+      ytopoff > arcwidth * 2 ||
+      ybotoff < -arcwidth * 2 ||
+      ytopoff > arcwidth * 2 ||
+      ybotoff < -arcwidth * 2
+    ) {
+      let slopebot = clipBez(
+        belcenpt,
+        x1,
+        y1,
+        x1,
+        y1 + ctrlheight,
+        x2,
+        y2 - ctrlheight,
+        x2,
+        y2,
+        path,
+        false
       );
+
+      let radiansbot = Math.atan(slopebot);
+
+      leftnewarcwidthbot = arcwidth / (Math.sin(-radiansbot) + 1);
+      leftnewxposbot = leftnewarcwidthbot * Math.cos(radiansbot);
+
+      //  path.moveTo(belcenptx + leftnewxposbot, center);
+      path.arc(
+        belcenptx + leftnewxposbot,
+        center + leftnewarcwidthbot,
+        leftnewarcwidthbot,
+        //bottom
+        Math.PI + radiansbot,
+        (Math.PI * 3) / 2
+        //left
+      );
+
+      path.moveTo(x2, y2);
+      path.lineTo(x2, y2 + arcwidth);
+
+      // svg
+      //   .append("circle")
+      //   .attr("cx", belcenptx + leftnewxposbot)
+      //   .attr("cy", center)
+      //   .attr("fill", "blue")
+      //   .attr("r", "10px");
+      let slopetop = clipBez(
+        abvcenpt,
+        x1,
+        y1,
+        x1,
+        y1 + ctrlheight,
+        x2,
+        y2 - ctrlheight,
+        x2,
+        y2,
+        path,
+        true
+      );
+
+      let radians = Math.atan(slopetop);
+
+      leftnewarcwidth = arcwidth / (Math.sin(radians) + 1);
+      leftnewxpos = leftnewarcwidth * Math.cos(radians);
+
+      path.moveTo(abvcenptx + leftnewxpos, center);
+      path.arc(
+        abvcenptx + leftnewxpos,
+        center - leftnewarcwidth,
+        leftnewarcwidth,
+        //bottom
+        Math.PI / 2,
+        //left
+        Math.PI + radians
+      );
+
+      path.moveTo(x1, y1);
+      path.lineTo(x1, y1 - arcwidth);
+
+      path.moveTo(belcenptx + leftnewxposbot, center);
+      path.lineTo(abvcenptx + leftnewxpos, center);
     }
+  }
+
+  //bottom arc
+  path.moveTo(x2 + arcwidth, y2 + arcwidth * 2);
+  path.arc(
+    x2 + arcwidth,
+    y2 + arcwidth - strokewidth / 2,
+    arcwidth,
+    Math.PI / 2,
+    Math.PI
+  );
+  path.moveTo(x2 + arcwidth, y2 + arcwidth * 2 - strokewidth / 2);
+  path.lineTo(
+    x2 + arcwidth * 4 - strokewidth / 2,
+    y2 + arcwidth * 2 - strokewidth / 2
+  );
+  path.lineTo(x2 + arcwidth * 4 - strokewidth / 2, y2);
+  clipBez(
+    center,
+    x1 + arcwidth * 4 - strokewidth / 2,
+    y1,
+    x1 + arcwidth * 4 - strokewidth / 2,
+    y1 + ctrlheight,
+    x2 + arcwidth * 4 - strokewidth / 2,
+    y2 - ctrlheight,
+    x2 + arcwidth * 4 - strokewidth / 2,
+    y2,
+    path,
+    false
+  );
+
+  path.lineTo(middlex + arcwidth, center);
+
+  if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
+    //left segment
+    path.moveTo(x2, y2 + arcwidth);
+    path.lineTo(x2, center + arcwidth);
+
+    //bottom bowl top arc
+    if (ytopoff <= arcwidth && ybotoff >= -arcwidth) {
+      path.moveTo(x2 + arcwidth * 3 - strokewidth, center - strokewidth / 2);
+    } else {
+      path.moveTo(x2 + arcwidth * 3 - strokewidth, center - strokewidth / 2);
+    }
+
+    path.moveTo(x2, center + arcwidth);
+    path.arc(
+      x2 + arcwidth,
+      center + arcwidth,
+      arcwidth,
+      Math.PI,
+      (Math.PI * 3) / 2
+    );
+  }
+
+  //top arc
+  path.moveTo(x1, y1 - arcwidth + strokewidth / 2);
+  path.arc(
+    x1 + arcwidth,
+    y1 - arcwidth + strokewidth / 2,
+    arcwidth,
+    Math.PI,
+    (Math.PI * 3) / 2
+  );
+  path.lineTo(x1 + arcwidth * 3, y1 - arcwidth * 2 + strokewidth / 2);
+  // path.moveTo(
+  //   x1 + arcwidth * 3 - strokewidth,
+  //   y1 - arcwidth * 2 + strokewidth / 2
+  // );
+
+  if (ytopoff <= arcwidth * 2 && ybotoff >= -arcwidth * 2) {
+    //left segment
+    path.moveTo(x1, y1 - arcwidth + strokewidth / 2);
+    path.lineTo(x1, center - arcwidth);
+
+    path.moveTo(x1 + arcwidth, center);
+    path.arc(x1 + arcwidth, center - arcwidth, arcwidth, Math.PI / 2, Math.PI);
+
+    path.moveTo(x1 + arcwidth, center);
+    path.lineTo(x2 + arcwidth, center);
   }
 }
 
@@ -1335,6 +1828,132 @@ function carm(
   }
 }
 
+function openparen(
+  path,
+  x1,
+  y1,
+  x2,
+  y2,
+  ctrlheight,
+  arcwidth,
+  top,
+  ybotoff,
+  ytopoff,
+  strokewidth
+) {
+  //const center = (y1 - y2) / 2;
+
+  let center = y1 + ytopoff / 2 - ybotoff / 2;
+
+  //center = 400;
+
+  let belcenpt, abvcenpt;
+
+  belcenpt = center + arcwidth;
+  abvcenpt = center - arcwidth;
+
+  if (!top) {
+    path.moveTo(x2 + arcwidth, y2 + arcwidth * 2 - strokewidth / 2);
+    path.arc(
+      x2 + arcwidth,
+      y2 + arcwidth - strokewidth / 2,
+      arcwidth,
+      Math.PI / 2,
+      Math.PI
+    );
+
+    //bottom line -----------------
+    path.moveTo(x2 + arcwidth, y2 + arcwidth * 2 - strokewidth / 2);
+    path.lineTo(
+      x2 + arcwidth * 2 - strokewidth,
+      y2 + arcwidth * 2 - strokewidth / 2
+    );
+  } else {
+    path.moveTo(x1, y1 - arcwidth + strokewidth / 2);
+    path.arc(
+      x1 + arcwidth,
+      y1 - arcwidth + strokewidth / 2,
+      arcwidth,
+      Math.PI,
+      (Math.PI * 3) / 2
+    );
+
+    //top line -----------------
+    path.moveTo(x1 + arcwidth, y1 - arcwidth * 2 + strokewidth / 2);
+    path.lineTo(
+      x1 + arcwidth * 2 - strokewidth,
+      y1 - arcwidth * 2 + strokewidth / 2
+    );
+  }
+}
+function closeparen(
+  path,
+  x1,
+  y1,
+  x2,
+  y2,
+  ctrlheight,
+  arcwidth,
+  top,
+  ybotoff,
+  ytopoff,
+  strokewidth
+) {
+  //const center = (y1 - y2) / 2;
+
+  let center = y1 + ytopoff / 2 - ybotoff / 2;
+
+  //center = 400;
+
+  let belcenpt, abvcenpt;
+
+  belcenpt = center + arcwidth;
+  abvcenpt = center - arcwidth;
+
+  if (!top) {
+    //bottom arc
+    path.moveTo(
+      x2 + arcwidth * 4 - strokewidth,
+      y2 + arcwidth - strokewidth / 2
+    );
+    path.arc(
+      x2 + arcwidth * 3 - strokewidth,
+      y2 + arcwidth - strokewidth / 2,
+      arcwidth,
+      0,
+      Math.PI / 2
+    );
+
+    //bottom line -----------------
+    path.moveTo(x2 + arcwidth * 2, y2 + arcwidth * 2 - strokewidth / 2);
+    path.lineTo(
+      x2 + arcwidth * 3 - strokewidth,
+      y2 + arcwidth * 2 - strokewidth / 2
+    );
+  } else {
+    //top arc
+    path.moveTo(
+      x1 + arcwidth * 3 - strokewidth,
+      y1 - arcwidth * 2 + strokewidth / 2
+    );
+
+    path.arc(
+      x1 + arcwidth * 3 - strokewidth,
+      y1 - arcwidth + strokewidth / 2,
+      arcwidth,
+      (Math.PI * 3) / 2,
+      0
+    );
+
+    //top line -----------------
+    path.moveTo(x1 + arcwidth * 2, y1 - arcwidth * 2 + strokewidth / 2);
+    path.lineTo(
+      x1 + arcwidth * 3 - strokewidth,
+      y1 - arcwidth * 2 + strokewidth / 2
+    );
+  }
+}
+
 function bezPoint(ypoint, x1, y1, cpx1, cpy1, cpx2, cpy2, x2, y2) {
   //uncomment this stuff if you need to vary the location of the stem
   let ycoord = [y1, cpy1, cpy2, y2];
@@ -1429,4 +2048,8 @@ export {
   doublebowl,
   reversebowl,
   closebrack,
+  openbrack,
+  openparen,
+  closeparen,
+  amp,
 };

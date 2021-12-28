@@ -1,7 +1,7 @@
-import { wiggle, bowl } from "./miome_utils";
+import { wiggle, closeparen } from "./miome_utils";
 import * as d3 from "d3";
 
-function three(
+function closeParen(
   svg,
   x,
   ypos,
@@ -22,6 +22,7 @@ function three(
   let xpos = x + strokewidth / 2;
   let segmentheight = fontsize / 2;
   let ytopoff, ybotoff, xtopoff, xbotoff;
+  xpos = xpos - width / 2;
   if (yoff >= 0) {
     ytopoff = fontsize * 4 * yoff;
     ybotoff = 0;
@@ -35,7 +36,37 @@ function three(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  bowl(
+  //bottom segment -----------------
+  path.moveTo(
+    xpos + xbotoff + width - strokewidth,
+    ypos - segmentheight - ybotoff
+  );
+  path.lineTo(
+    xpos + xbotoff + width - strokewidth,
+    ypos - segmentheight / 2 - ybotoff - strokewidth / 2
+  );
+
+  //top segment -----------------
+  path.moveTo(
+    xpos + xtopoff + width - strokewidth,
+    ypos - (segmentheight * 3) / 2 - ytopoff + strokewidth / 2
+  );
+  path.lineTo(
+    xpos + xtopoff + width - strokewidth,
+    ypos - segmentheight - ytopoff
+  );
+
+  //left wiggle
+  wiggle(
+    path,
+    xpos + xtopoff + width - strokewidth,
+    ypos - segmentheight - ytopoff,
+    xpos + xbotoff + width - strokewidth,
+    ypos - segmentheight - ybotoff,
+    ctrlHeight
+  );
+
+  closeparen(
     path,
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
@@ -47,10 +78,10 @@ function three(
     ybotoff,
     ytopoff,
     strokewidth,
-    fontsize / 4
+    true
   );
 
-  bowl(
+  closeparen(
     path,
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
@@ -62,7 +93,7 @@ function three(
     ybotoff,
     ytopoff,
     strokewidth,
-    fontsize / 4
+    true
   );
 
   //console.log(path);
@@ -77,21 +108,23 @@ function three(
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
+
     if (cons) {
+      //construction lines
       svg
         .append("path")
         .attr("id", "id" + "w")
         .attr(
           "d",
           `M${x}, ${ypos}L${x}, ${ypos - segmentheight * 2} M${
-            x + fontsize
-          }, ${ypos}L${x + fontsize}, ${
+            x + fontsize / 2
+          }, ${ypos}L${x + fontsize / 2}, ${
             ypos - segmentheight * 2
-          } M${x}, ${ypos}L${x + fontsize}, ${ypos}  M${x}, ${
+          } M${x}, ${ypos}L${x + fontsize / 2}, ${ypos}  M${x}, ${
             ypos - fontsize
-          }L${x + fontsize}, ${ypos - fontsize} M${x}, ${ypos - fontsize / 2}L${
-            x + fontsize
-          }, ${ypos - fontsize / 2}`
+          }L${x + fontsize / 2}, ${ypos - fontsize} M${x}, ${
+            ypos - fontsize / 2
+          }L${x + fontsize / 2}, ${ypos - fontsize / 2}`
         )
         .attr("fill", "none")
         .attr("stroke", "#0088ff")
@@ -106,4 +139,4 @@ function three(
       .attr("stroke-width", strokewidth);
   }
 }
-export { three };
+export { closeParen };

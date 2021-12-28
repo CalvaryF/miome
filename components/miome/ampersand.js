@@ -1,7 +1,7 @@
-import { wiggle, bowl } from "./miome_utils";
+import { wiggle, bowl, amp } from "./miome_utils";
 import * as d3 from "d3";
 
-function three(
+function ampersand(
   svg,
   x,
   ypos,
@@ -35,7 +35,26 @@ function three(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  bowl(
+  //   //bottom segment -----------------
+  //   path.moveTo(xpos + xbotoff, ypos - ybotoff);
+  //   path.lineTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
+
+  //   //top segment -----------------
+  //   path.moveTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
+  //   path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
+
+  //   //left wiggle
+  //   wiggle(
+  //     path,
+  //     xpos + xtopoff,
+  //     ypos - segmentheight - ytopoff,
+  //     xpos + xbotoff,
+  //     ypos - segmentheight - ybotoff,
+  //     ctrlHeight
+  //   );
+
+  amp(
+    svg,
     path,
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
@@ -47,23 +66,23 @@ function three(
     ybotoff,
     ytopoff,
     strokewidth,
-    fontsize / 4
+    0
   );
 
-  bowl(
-    path,
-    xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    false,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
-  );
+  // closebrack(
+  //   path,
+  //   xpos + xtopoff,
+  //   ypos - segmentheight - ytopoff,
+  //   xpos + xbotoff,
+  //   ypos - segmentheight - ybotoff,
+  //   ctrlHeight,
+  //   arcwidth,
+  //   false,
+  //   ybotoff,
+  //   ytopoff,
+  //   strokewidth,
+  //   0
+  // );
 
   //console.log(path);
 
@@ -106,4 +125,4 @@ function three(
       .attr("stroke-width", strokewidth);
   }
 }
-export { three };
+export { ampersand };

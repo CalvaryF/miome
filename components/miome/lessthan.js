@@ -1,7 +1,8 @@
-import { wiggle, bowl } from "./miome_utils";
+import { wiggle, bezPoint } from "./miome_utils";
+
 import * as d3 from "d3";
 
-function three(
+function lessthan(
   svg,
   x,
   ypos,
@@ -16,7 +17,6 @@ function three(
 ) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
-  let arcwidth = fontsize / 4;
   const width = fontsize;
   const path = d3.path();
   let xpos = x + strokewidth / 2;
@@ -35,37 +35,31 @@ function three(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  bowl(
-    path,
+  //middle thing
+  let center = ypos - segmentheight - ytopoff / 2 - ybotoff / 2;
+
+  let middlex;
+  middlex = bezPoint(
+    center,
+    //
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    true,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
-  );
-
-  bowl(
-    path,
     xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
+    ypos - segmentheight - ytopoff + ctrlHeight,
     xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    false,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
+    ypos - segmentheight - ybotoff - ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff
   );
 
-  //console.log(path);
+  //bottom segment -----------------
+  path.moveTo(xpos + xbotoff + width - strokewidth, ypos - ybotoff);
+  path.lineTo(middlex, center);
+  path.lineTo(
+    xpos + xtopoff + width - strokewidth,
+    ypos - segmentheight * 2 - ytopoff
+  );
+  // path.lineTo(middlex + width, center);
 
   // letter
   if (!update) {
@@ -77,6 +71,7 @@ function three(
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
+
     if (cons) {
       svg
         .append("path")
@@ -106,4 +101,5 @@ function three(
       .attr("stroke-width", strokewidth);
   }
 }
-export { three };
+
+export { lessthan };

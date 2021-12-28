@@ -41,6 +41,31 @@ import { at } from "./at";
 import { ques } from "./ques";
 import { slash } from "./slash";
 import { closeBracket } from "./closeBracket";
+import { openBracket } from "./openBracket";
+import { openBrace } from "./openBrace";
+import { closeBrace } from "./closeBrace";
+import { period } from "./period";
+import { openParen } from "./openParen";
+import { closeParen } from "./closeParen";
+import { plus } from "./plus";
+import { dash } from "./dash";
+import { underscore } from "./underscore";
+import { ampersand } from "./ampersand";
+import { equals } from "./equals";
+import { hash } from "./hash";
+import { tilde } from "./tilde";
+import { backslash } from "./backslash";
+import { pipe } from "./pipe";
+import { exclaim } from "./exclaim";
+import { carat } from "./carat";
+import { colon } from "./colon";
+import { comma } from "./comma";
+import { semicolon } from "./semicolon";
+import { greaterthan } from "./greaterthan";
+import { lessthan } from "./lessthan";
+import { singlequote } from "./singlequote";
+import { doublequote } from "./doublequote";
+import { backtick } from "./backtick";
 
 export default function char(
   string,
@@ -408,6 +433,381 @@ export default function char(
       break;
     case "}":
       closeBracket(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "{":
+      openBracket(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "[":
+      openBrace(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "]":
+      closeBrace(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case ".":
+      period(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "(":
+      openParen(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case ")":
+      closeParen(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "+":
+      plus(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "-":
+      dash(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "_":
+      underscore(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "&":
+      ampersand(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "=":
+      equals(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "#":
+      hash(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "~":
+      tilde(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "\\":
+      backslash(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "|":
+      pipe(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "!":
+      exclaim(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "^":
+      carat(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case ":":
+      colon(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case ",":
+      comma(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case ";":
+      semicolon(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case ">":
+      greaterthan(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "<":
+      lessthan(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "'":
+      singlequote(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case '"':
+      doublequote(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons
+      );
+      break;
+    case "`":
+      backtick(
         svg,
         xpos,
         ypos,

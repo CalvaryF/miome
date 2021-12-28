@@ -41,10 +41,31 @@ function word(
       false,
       cons
     );
-    if (string[i] == "m" || string[i] == "w") {
+    if (string[i] == "m" || string[i] == "w" || string[i] == "~") {
       offset += fontsize / 3;
-    } else if (string[i] == "i" || string[i] == "I" || string[i] == "}") {
+    } else if (
+      string[i] == "i" ||
+      string[i] == "I" ||
+      string[i] == "}" ||
+      string[i] == "{" ||
+      string[i] == "]" ||
+      string[i] == "[" ||
+      string[i] == "(" ||
+      string[i] == ")" ||
+      string[i] == " " ||
+      string[i] == ";" ||
+      string[i] == '"' ||
+      string[i] == "`"
+    ) {
       offset -= fontsize / 2;
+    } else if (
+      string[i] == "." ||
+      string[i] == "|" ||
+      string[i] == "!" ||
+      string[i] == ":" ||
+      string[i] == ","
+    ) {
+      offset -= fontsize / 1.4;
     }
   }
 }
@@ -80,6 +101,7 @@ export default function Word({
 
     const interval = setInterval(() => {
       d3.select(DivRef.current).select("svg").selectAll("path").remove();
+      d3.select(DivRef.current).select("svg").selectAll("circle").remove();
       if (index > 25) {
         direction = 1;
       } else if (index < -25) {
@@ -106,7 +128,22 @@ export default function Word({
         space,
         false
       );
-    }, 10);
+
+      // word(
+      //   children,
+      //   svg,
+      //   520,
+      //   300,
+      //   -index * 0.02,
+      //   -index * 0.01,
+      //   fontsize,
+      //   weight,
+      //   2,
+      //   "a",
+      //   space,
+      //   false
+      // );
+    }, 20);
 
     return () => {
       clearInterval(interval);

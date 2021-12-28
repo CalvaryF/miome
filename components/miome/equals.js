@@ -1,7 +1,8 @@
-import { wiggle, bowl } from "./miome_utils";
+import { wiggle, bezPoint } from "./miome_utils";
+
 import * as d3 from "d3";
 
-function three(
+function equals(
   svg,
   x,
   ypos,
@@ -16,7 +17,6 @@ function three(
 ) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
-  let arcwidth = fontsize / 4;
   const width = fontsize;
   const path = d3.path();
   let xpos = x + strokewidth / 2;
@@ -35,37 +35,59 @@ function three(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  bowl(
-    path,
+  //   //left wiggle
+  //   wiggle(
+  //     path,
+  //     xpos + xtopoff,
+  //     ypos - segmentheight - ytopoff,
+  //     xpos + xbotoff,
+  //     ypos - segmentheight - ybotoff,
+  //     ctrlHeight
+  //   );
+
+  //middle thing
+  let topline = ypos - segmentheight - ytopoff / 2 - ybotoff / 2 - fontsize / 4;
+  let bottomline =
+    ypos - segmentheight - ytopoff / 2 - ybotoff / 2 + fontsize / 4;
+
+  let middletop;
+  middletop = bezPoint(
+    topline,
+    //
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff + ctrlHeight,
     xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    true,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
+    ypos - segmentheight - ybotoff - ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff
   );
 
-  bowl(
-    path,
+  let middlebot;
+  middlebot = bezPoint(
+    bottomline,
+    //
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
+    xpos + xtopoff,
+    ypos - segmentheight - ytopoff + ctrlHeight,
     xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    false,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
+    ypos - segmentheight - ybotoff - ctrlHeight,
+    xpos + xbotoff,
+    ypos - segmentheight - ybotoff
   );
 
-  //console.log(path);
+  path.moveTo(middletop, topline);
+  path.lineTo(middletop + width - strokewidth, topline);
+
+  if (-ybotoff > fontsize / 2 || ytopoff > fontsize / 2) {
+    path.moveTo(middlebot, bottomline);
+    path.lineTo(middlebot + width - strokewidth, bottomline);
+  } else {
+    path.moveTo(xpos + xbotoff, bottomline);
+    path.lineTo(xpos + xbotoff + width - strokewidth, bottomline);
+  }
 
   // letter
   if (!update) {
@@ -77,6 +99,7 @@ function three(
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
+
     if (cons) {
       svg
         .append("path")
@@ -106,4 +129,5 @@ function three(
       .attr("stroke-width", strokewidth);
   }
 }
-export { three };
+
+export { equals };

@@ -1,7 +1,8 @@
-import { wiggle, bowl } from "./miome_utils";
+import { wiggle, bezPoint } from "./miome_utils";
+
 import * as d3 from "d3";
 
-function three(
+function openBrace(
   svg,
   x,
   ypos,
@@ -16,7 +17,6 @@ function three(
 ) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
-  let arcwidth = fontsize / 4;
   const width = fontsize;
   const path = d3.path();
   let xpos = x + strokewidth / 2;
@@ -35,37 +35,25 @@ function three(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  bowl(
+  //bottom segment -----------------
+  path.moveTo(xpos + xbotoff + width / 2, ypos - ybotoff);
+  path.lineTo(xpos + xbotoff, ypos - ybotoff);
+  path.lineTo(xpos + xbotoff, ypos - segmentheight - ybotoff);
+
+  //top segment -----------------
+  path.moveTo(xpos + xtopoff + width / 2, ypos - segmentheight * 2 - ytopoff);
+  path.lineTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
+  path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
+
+  //left wiggle
+  wiggle(
     path,
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
     xpos + xbotoff,
     ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    true,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
+    ctrlHeight
   );
-
-  bowl(
-    path,
-    xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    false,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
-  );
-
-  //console.log(path);
 
   // letter
   if (!update) {
@@ -77,6 +65,7 @@ function three(
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
+
     if (cons) {
       svg
         .append("path")
@@ -84,14 +73,14 @@ function three(
         .attr(
           "d",
           `M${x}, ${ypos}L${x}, ${ypos - segmentheight * 2} M${
-            x + fontsize
-          }, ${ypos}L${x + fontsize}, ${
+            x + fontsize / 2
+          }, ${ypos}L${x + fontsize / 2}, ${
             ypos - segmentheight * 2
-          } M${x}, ${ypos}L${x + fontsize}, ${ypos}  M${x}, ${
+          } M${x}, ${ypos}L${x + fontsize / 2}, ${ypos}  M${x}, ${
             ypos - fontsize
-          }L${x + fontsize}, ${ypos - fontsize} M${x}, ${ypos - fontsize / 2}L${
-            x + fontsize
-          }, ${ypos - fontsize / 2}`
+          }L${x + fontsize / 2}, ${ypos - fontsize} M${x}, ${
+            ypos - fontsize / 2
+          }L${x + fontsize / 2}, ${ypos - fontsize / 2}`
         )
         .attr("fill", "none")
         .attr("stroke", "#0088ff")
@@ -106,4 +95,5 @@ function three(
       .attr("stroke-width", strokewidth);
   }
 }
-export { three };
+
+export { openBrace };

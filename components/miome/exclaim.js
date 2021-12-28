@@ -1,7 +1,7 @@
-import { wiggle, bowl } from "./miome_utils";
+import { wiggle, bowl, bezPoint, clipBez } from "./miome_utils";
 import * as d3 from "d3";
 
-function three(
+function exclaim(
   svg,
   x,
   ypos,
@@ -35,34 +35,48 @@ function three(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  bowl(
-    path,
-    xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    true,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
+  //bottom segment -----------------
+  path.moveTo(
+    xpos + xbotoff + fontsize / 8,
+    ypos - segmentheight / 1.3 - ybotoff
   );
+  path.lineTo(xpos + xbotoff + fontsize / 8, ypos - segmentheight - ybotoff);
 
-  bowl(
+  //   //bottom segment -----------------
+  //   path.moveTo(xpos + xbotoff, ypos - ybotoff);
+  //   path.lineTo(xpos + xbotoff, ypos - segmentheight / 3 - ybotoff);
+
+  //   //top segment -----------------
+  //   path.moveTo(xpos + xtopoff, ypos - segmentheight * 2 - ytopoff);
+  //   path.lineTo(xpos + xtopoff, ypos - segmentheight - ytopoff);
+
+  //   //left wiggle
+  //   wiggle(
+  //     path,
+  //     xpos + xtopoff,
+  //     ypos - segmentheight - ytopoff,
+  //     xpos + xbotoff,
+  //     ypos - segmentheight - ybotoff,
+  //     ctrlHeight
+  //   );
+
+  let center = ypos - segmentheight - ytopoff + ytopoff / 2 - ybotoff / 2;
+
+  //top segment -----------------
+  path.moveTo(
+    xpos + xtopoff + fontsize / 8,
+    ypos - segmentheight * 2 - ytopoff
+  );
+  path.lineTo(xpos + xtopoff + fontsize / 8, ypos - segmentheight - ytopoff);
+
+  //left wiggle
+  wiggle(
     path,
-    xpos + xtopoff,
+    xpos + xtopoff + fontsize / 8,
     ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
+    xpos + xbotoff + fontsize / 8,
     ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    false,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
+    ctrlHeight
   );
 
   //console.log(path);
@@ -73,6 +87,17 @@ function three(
       .append("path")
       .attr("id", id)
       .attr("d", path)
+      .attr("fill", "none")
+      .attr("stroke", "white")
+      .attr("stroke-width", strokewidth)
+      .attr("stroke-linecap", "butt");
+
+    svg
+      .append("circle")
+      .attr("id", id)
+      .attr("cx", xpos + xbotoff + fontsize / 8)
+      .attr("cy", ypos - ybotoff - fontsize / 8)
+      .attr("r", fontsize / 8)
       .attr("fill", "none")
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
@@ -106,4 +131,4 @@ function three(
       .attr("stroke-width", strokewidth);
   }
 }
-export { three };
+export { exclaim };

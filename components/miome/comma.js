@@ -1,7 +1,7 @@
-import { wiggle, bowl } from "./miome_utils";
+import { wiggle, carm } from "./miome_utils";
 import * as d3 from "d3";
 
-function three(
+function comma(
   svg,
   x,
   ypos,
@@ -35,40 +35,28 @@ function three(
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
-  bowl(
-    path,
-    xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    true,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
+  //left arc
+  path.arc(
+    xpos + xbotoff - arcwidth,
+    ypos - strokewidth / 2 - ybotoff,
+    arcwidth * 1.5,
+    0,
+    Math.PI / 2
   );
-
-  bowl(
-    path,
-    xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    false,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    fontsize / 4
-  );
-
-  //console.log(path);
 
   // letter
   if (!update) {
+    // svg
+    //   .append("circle")
+    //   .attr("id", id)
+    //   .attr("cx", xpos + xbotoff + fontsize / 8)
+    //   .attr("cy", ypos - ybotoff - fontsize / 8)
+    //   .attr("r", fontsize / 4)
+    //   .attr("fill", "none")
+    //   .attr("stroke", "white")
+    //   .attr("stroke-width", strokewidth)
+    //   .attr("stroke-linecap", "butt");
+
     svg
       .append("path")
       .attr("id", id)
@@ -77,6 +65,7 @@ function three(
       .attr("stroke", "white")
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
+
     if (cons) {
       svg
         .append("path")
@@ -106,4 +95,4 @@ function three(
       .attr("stroke-width", strokewidth);
   }
 }
-export { three };
+export { comma };

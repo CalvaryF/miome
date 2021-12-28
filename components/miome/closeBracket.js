@@ -54,6 +54,7 @@ function closeBracket(
   //   );
 
   closebrack(
+    svg,
     path,
     xpos + xtopoff,
     ypos - segmentheight - ytopoff,
@@ -68,20 +69,20 @@ function closeBracket(
     0
   );
 
-  closebrack(
-    path,
-    xpos + xtopoff,
-    ypos - segmentheight - ytopoff,
-    xpos + xbotoff,
-    ypos - segmentheight - ybotoff,
-    ctrlHeight,
-    arcwidth,
-    false,
-    ybotoff,
-    ytopoff,
-    strokewidth,
-    0
-  );
+  // closebrack(
+  //   path,
+  //   xpos + xtopoff,
+  //   ypos - segmentheight - ytopoff,
+  //   xpos + xbotoff,
+  //   ypos - segmentheight - ybotoff,
+  //   ctrlHeight,
+  //   arcwidth,
+  //   false,
+  //   ybotoff,
+  //   ytopoff,
+  //   strokewidth,
+  //   0
+  // );
 
   //console.log(path);
 

@@ -79,170 +79,876 @@ export default function char(
   wig,
   id,
   update,
-  cons
+  cons,
+  color,
+  absolute_offset
 ) {
   switch (string) {
     case "a":
-      a(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      a(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color,
+        absolute_offset
+      );
       break;
     case "b":
-      b(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      b(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color,
+        absolute_offset
+      );
       break;
     case "c":
-      c(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      c(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "d":
-      d(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      d(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "e":
-      e(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      e(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "f":
-      f(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      f(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "g":
-      g(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      g(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "h":
-      h(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      h(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "i":
-      i(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      i(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "j":
-      j(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      j(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "k":
-      k(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      k(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "l":
-      l(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      l(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "m":
-      m(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      m(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "n":
-      n(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      n(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "o":
-      o(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      o(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "p":
-      p(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      p(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "q":
-      q(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      q(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "r":
-      r(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      r(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "s":
-      s(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      s(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "t":
-      t(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      t(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "u":
-      u(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      u(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "v":
-      v(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      v(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "w":
-      w(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      w(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "x":
-      x(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      x(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "y":
-      y(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      y(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "z":
-      z(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      z(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "A":
-      a(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      a(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "B":
-      b(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      b(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "C":
-      c(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      c(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "D":
-      d(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      d(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "E":
-      e(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      e(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "F":
-      f(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      f(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "G":
-      g(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      g(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "H":
-      h(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      h(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "I":
-      i(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      i(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "J":
-      j(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      j(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "K":
-      k(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      k(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "L":
-      l(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      l(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "M":
-      m(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      m(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "N":
-      n(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      n(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "O":
-      o(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      o(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "P":
-      p(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      p(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "Q":
-      q(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      q(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "R":
-      r(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      r(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "S":
-      s(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      s(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "T":
-      t(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      t(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "U":
-      u(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      u(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "V":
-      v(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      v(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "W":
-      w(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      w(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "X":
-      x(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      x(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "Y":
-      y(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      y(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "Z":
-      z(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      z(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "1":
-      one(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      one(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "2":
-      two(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      two(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "3":
       three(
@@ -256,7 +962,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "4":
@@ -271,7 +978,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "5":
@@ -286,11 +994,25 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "6":
-      six(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      six(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "7":
       seven(
@@ -304,7 +1026,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "8":
@@ -319,7 +1042,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "9":
@@ -334,7 +1058,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "0":
@@ -349,7 +1074,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
       break;
@@ -365,7 +1091,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "%":
@@ -380,7 +1107,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "$":
@@ -395,11 +1123,25 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "@":
-      at(svg, xpos, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons);
+      at(
+        svg,
+        xpos,
+        ypos,
+        xoff,
+        yoff,
+        fontsize,
+        weight,
+        wig,
+        id,
+        update,
+        cons,
+        color
+      );
       break;
     case "?":
       ques(
@@ -413,7 +1155,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "/":
@@ -428,7 +1171,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "}":
@@ -443,7 +1187,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "{":
@@ -458,7 +1203,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "[":
@@ -473,7 +1219,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "]":
@@ -488,7 +1235,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case ".":
@@ -503,7 +1251,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "(":
@@ -518,7 +1267,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case ")":
@@ -533,7 +1283,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "+":
@@ -548,7 +1299,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "-":
@@ -563,7 +1315,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "_":
@@ -578,7 +1331,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "&":
@@ -593,7 +1347,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "=":
@@ -608,7 +1363,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "#":
@@ -623,7 +1379,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "~":
@@ -638,7 +1395,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "\\":
@@ -653,7 +1411,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "|":
@@ -668,7 +1427,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "!":
@@ -683,7 +1443,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "^":
@@ -698,7 +1459,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case ":":
@@ -713,7 +1475,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case ",":
@@ -728,7 +1491,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case ";":
@@ -743,7 +1507,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case ">":
@@ -758,7 +1523,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "<":
@@ -773,7 +1539,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "'":
@@ -788,7 +1555,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case '"':
@@ -803,7 +1571,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
     case "`":
@@ -818,7 +1587,8 @@ export default function char(
         wig,
         id,
         update,
-        cons
+        cons,
+        color
       );
       break;
   }

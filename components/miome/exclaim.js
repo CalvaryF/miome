@@ -12,7 +12,8 @@ function exclaim(
   wig,
   id,
   update,
-  cons
+  cons,
+  bgcol
 ) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
@@ -88,7 +89,7 @@ function exclaim(
       .attr("id", id)
       .attr("d", path)
       .attr("fill", "none")
-      .attr("stroke", "white")
+      .attr("stroke", bgcol)
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
 
@@ -99,7 +100,7 @@ function exclaim(
       .attr("cy", ypos - ybotoff - fontsize / 8)
       .attr("r", fontsize / 8)
       .attr("fill", "none")
-      .attr("stroke", "white")
+      .attr("stroke", bgcol)
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
     if (cons) {

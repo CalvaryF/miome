@@ -1,0 +1,112 @@
+<head>
+  <meta charset="utf-8" />
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+  <script>
+    var svg = d3
+      .select("body")
+      .append("svg")
+      .attr("width", "600")
+      .attr("height", "600")
+      .style("border", "solid 1px");
+
+    var dragHandler = d3.drag().on("drag", dragged);
+    // .on('start', dragstarted);
+
+    var circle = svg
+      .append("circle")
+      .attr("id", "c1")
+      .attr("cx", 50)
+      .attr("cy", 50)
+      .attr("r", 5);
+
+    var circle2 = svg
+      .append("circle")
+      .attr("id", "c2")
+      .attr("cx", 251)
+      .attr("cy", 251)
+      .attr("r", 5);
+
+    dragHandler(circle);
+    dragHandler(circle2);
+
+    var x1 = d3.select("#c1").attr("cx");
+
+    var y1 = d3.select("#c1").attr("cy");
+
+    var x2 = d3.select("#c2").attr("cx");
+
+    var y2 = d3.select("#c2").attr("cy");
+
+    svg
+      .append("rect")
+      .attr("id", "box")
+      .attr("x", x1)
+      .attr("y", y1)
+      .attr("height", Math.abs(y1 - y2))
+      .attr("width", Math.abs(x1 - x2))
+      .attr("fill", "#dfdfdf")
+      .attr("stroke-width", 2)
+      .attr("stroke-linecap", "butt")
+      .attr("rx", 10)
+      .attr("ry", 10)
+      .lower();
+
+    var minsize = 200;
+
+    function dragged() {
+      var current = d3.select(this);
+      var cir;
+      current.attr("cx", d3.event.x).attr("cy", d3.event.y);
+
+      var c2x = parseInt(d3.select("#c2").attr("cx"));
+      var c2y = parseInt(d3.select("#c2").attr("cy"));
+      var c1x = parseInt(d3.select("#c1").attr("cx"));
+      var c1y = parseInt(d3.select("#c1").attr("cy"));
+
+      if (current.attr("id") == "c1") {
+        if (
+          Math.abs(current.attr("cx") - c2x) < minsize ||
+          parseInt(current.attr("cx")) > c2x
+        ) {
+          current.attr("cx", c2x - minsize + 1);
+        }
+        if (
+          Math.abs(current.attr("cy") - c2y) < minsize ||
+          parseInt(current.attr("cy")) > c2y
+        ) {
+          current.attr("cy", c2y - minsize + 1);
+        }
+      } else {
+        if (
+          Math.abs(current.attr("cx") - c1x) < minsize ||
+          parseInt(current.attr("cx")) < c1x
+        ) {
+          current.attr("cx", c1x + minsize + 1);
+        }
+        if (
+          Math.abs(current.attr("cy") - c1y) < minsize ||
+          parseInt(current.attr("cy")) < c1y
+        ) {
+          current.attr("cy", c1y + minsize + 1);
+        }
+      }
+
+      x1 = d3.select("#c1").attr("cx");
+
+      y1 = d3.select("#c1").attr("cy");
+
+      x2 = d3.select("#c2").attr("cx");
+
+      y2 = d3.select("#c2").attr("cy");
+
+      svg
+        .select("#box")
+        .attr("x", x1)
+        .attr("y", y1)
+        .attr("height", Math.abs(y1 - y2))
+        .attr("width", Math.abs(x1 - x2));
+    }
+  </script>
+</body>

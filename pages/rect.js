@@ -32,18 +32,17 @@ export default function Home() {
   return (
     <Bg>
       <SBox w={width} h={height}>
-        <input onChange={(e) => setIn(e.target.value)}></input>
-        <Word
+        <Rectangle
           fontsize={90}
           space={20}
-          weight={1}
+          weight={0.22}
           width={width}
           height={height}
           bgcol={"white"}
           color={"black"}
         >
           {In}
-        </Word>
+        </Rectangle>
       </SBox>
     </Bg>
   );

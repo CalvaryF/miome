@@ -19,7 +19,8 @@ function word(
   wig,
   id,
   space,
-  cons
+  cons,
+  color
 ) {
   let offset = 0;
 
@@ -39,7 +40,8 @@ function word(
       wig,
       id,
       false,
-      cons
+      cons,
+      color
     );
     if (string[i] == "m" || string[i] == "w" || string[i] == "~") {
       offset += fontsize / 3;
@@ -77,6 +79,8 @@ export default function Word({
   space,
   weight,
   children,
+  bgcol,
+  color,
 }) {
   const DivRef = useRef(null);
   const SRef = useRef(null);
@@ -89,7 +93,8 @@ export default function Word({
       .create("svg")
       .attr("ref", SRef)
       .attr("viewBox", [0, 0, width, height])
-      .attr("tabindex", 1);
+      .attr("tabindex", 1)
+      .attr("style", `background-color:${bgcol}`);
 
     S.selectAll("span")
       .data([1])
@@ -126,7 +131,8 @@ export default function Word({
         2,
         "a",
         space,
-        false
+        true,
+        color
       );
 
       // word(
@@ -143,12 +149,12 @@ export default function Word({
       //   space,
       //   false
       // );
-    }, 20);
+    }, 10);
 
     return () => {
       clearInterval(interval);
     };
-  }, [children, fontsize, space, weight]);
+  }, [children, fontsize, space, weight, bgcol, color]);
 
   return (
     <div ref={DivRef}>

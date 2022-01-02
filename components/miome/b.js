@@ -1,25 +1,54 @@
 import { wiggle, bowl } from "./miome_utils";
 import * as d3 from "d3";
 
-function b(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
+function b(
+  svg,
+  x,
+  ypos,
+  xoff,
+  yoff,
+  fontsize,
+  weight,
+  wig,
+  id,
+  update,
+  cons,
+  color,
+  absolute_offset
+) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
-  let arcwidth = fontsize / 4;
+  let arcwidth = fontsize / 4 - strokewidth / 2 + strokewidth / 4;
   const width = fontsize;
   const path = d3.path();
   let xpos = x + strokewidth / 2;
   let segmentheight = fontsize / 2;
   let ytopoff, ybotoff, xtopoff, xbotoff;
-  if (yoff >= 0) {
-    ytopoff = fontsize * 4 * yoff;
-    ybotoff = 0;
-    xtopoff = fontsize * xoff * Math.abs(yoff) * 4;
-    xbotoff = 0;
+  if (yoff == 0) xoff = 0;
+  if (absolute_offset) {
+    if (yoff >= 0) {
+      ytopoff = yoff;
+      ybotoff = 0;
+      xtopoff = xoff;
+      xbotoff = 0;
+    } else {
+      ytopoff = 0;
+      ybotoff = yoff;
+      xtopoff = 0;
+      xbotoff = xoff;
+    }
   } else {
-    ytopoff = 0;
-    ybotoff = fontsize * 4 * yoff;
-    xtopoff = 0;
-    xbotoff = fontsize * xoff * Math.abs(yoff) * 4;
+    if (yoff >= 0) {
+      ytopoff = fontsize * 4 * yoff;
+      ybotoff = 0;
+      xtopoff = fontsize * xoff * Math.abs(yoff) * 4;
+      xbotoff = 0;
+    } else {
+      ytopoff = 0;
+      ybotoff = fontsize * 4 * yoff;
+      xtopoff = 0;
+      xbotoff = fontsize * xoff * Math.abs(yoff) * 4;
+    }
   }
   let ctrlHeight = (-ybotoff + ytopoff) / wig;
 
@@ -80,7 +109,7 @@ function b(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
       .attr("id", id)
       .attr("d", path)
       .attr("fill", "none")
-      .attr("stroke", "white")
+      .attr("stroke", color)
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
     if (cons) {

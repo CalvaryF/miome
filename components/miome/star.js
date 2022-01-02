@@ -13,7 +13,8 @@ function star(
   wig,
   id,
   update,
-  cons
+  cons,
+  bgcol
 ) {
   //  console.log("called");
   if (weight > 2) weight = 2;
@@ -140,7 +141,7 @@ function star(
       .attr("id", id)
       .attr("d", path)
       .attr("fill", "none")
-      .attr("stroke", "white")
+      .attr("stroke", bgcol)
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
 

@@ -12,7 +12,8 @@ function closeParen(
   wig,
   id,
   update,
-  cons
+  cons,
+  bgcol
 ) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
@@ -105,7 +106,7 @@ function closeParen(
       .attr("id", id)
       .attr("d", path)
       .attr("fill", "none")
-      .attr("stroke", "white")
+      .attr("stroke", bgcol)
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
 

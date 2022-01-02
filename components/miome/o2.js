@@ -1,7 +1,20 @@
 import { wiggle, carm } from "./miome_utils";
 import * as d3 from "d3";
 
-function o(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
+function o(
+  svg,
+  x,
+  ypos,
+  xoff,
+  yoff,
+  fontsize,
+  weight,
+  wig,
+  id,
+  update,
+  cons,
+  bgcol
+) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
   let arcwidth = fontsize / 4;
@@ -126,7 +139,7 @@ function o(svg, x, ypos, xoff, yoff, fontsize, weight, wig, id, update, cons) {
       .attr("id", id)
       .attr("d", path)
       .attr("fill", "none")
-      .attr("stroke", "white")
+      .attr("stroke", bgcol)
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
 

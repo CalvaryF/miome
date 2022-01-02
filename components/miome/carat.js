@@ -13,7 +13,8 @@ function carat(
   wig,
   id,
   update,
-  cons
+  cons,
+  color
 ) {
   if (weight > 2) weight = 2;
   const strokewidth = (fontsize / 4) * weight;
@@ -50,7 +51,7 @@ function carat(
       .attr("id", id)
       .attr("d", path)
       .attr("fill", "none")
-      .attr("stroke", "white")
+      .attr("stroke", color)
       .attr("stroke-width", strokewidth)
       .attr("stroke-linecap", "butt");
 

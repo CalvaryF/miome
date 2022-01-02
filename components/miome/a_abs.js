@@ -25,30 +25,17 @@ function a(
   let segmentheight = fontsize / 2;
   let ytopoff, ybotoff, xtopoff, xbotoff;
   if (yoff == 0) xoff = 0;
-  if (absolute_offset) {
-    if (yoff >= 0) {
-      ytopoff = yoff;
-      ybotoff = 0;
-      xtopoff = xoff;
-      xbotoff = 0;
-    } else {
-      ytopoff = 0;
-      ybotoff = yoff;
-      xtopoff = 0;
-      xbotoff = xoff;
-    }
+  // if (xoff == 0) yoff = 0;
+  if (yoff > 0) {
+    ytopoff = yoff;
+    ybotoff = 0;
+    xtopoff = xoff;
+    xbotoff = 0;
   } else {
-    if (yoff >= 0) {
-      ytopoff = fontsize * 4 * yoff;
-      ybotoff = 0;
-      xtopoff = fontsize * xoff * Math.abs(yoff) * 4;
-      xbotoff = 0;
-    } else {
-      ytopoff = 0;
-      ybotoff = fontsize * 4 * yoff;
-      xtopoff = 0;
-      xbotoff = fontsize * xoff * Math.abs(yoff) * 4;
-    }
+    ytopoff = 0;
+    ybotoff = yoff;
+    xtopoff = 0;
+    xbotoff = xoff;
   }
 
   let ctrlHeight = (-ybotoff + ytopoff) / wig;

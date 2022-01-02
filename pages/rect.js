@@ -35,7 +35,7 @@ export default function Home() {
         <Rectangle
           fontsize={90}
           space={20}
-          weight={0.22}
+          weight={0.5}
           width={width}
           height={height}
           bgcol={"white"}

@@ -1,5 +1,5 @@
 import char from "./char";
-import { a } from "./a_abs";
+import { a } from "./characters/a_abs";
 import styled from "styled-components";
 import React, { useEffect, useRef } from "react";
 import { select } from "d3";
@@ -45,6 +45,8 @@ export default function Word({
     var xpos = 50;
     var ypos = 50;
 
+    var letter = "B";
+
     var circle = svg
       .append("circle")
       .attr("id", "c1")
@@ -84,16 +86,18 @@ export default function Word({
       .attr("ry", 10)
       .lower();
     var minsize = 150;
+    var maxsize = 300;
+
     var margin = 20;
     char(
-      "b",
+      letter,
       svg,
       xpos + margin,
       ypos + minsize - margin,
       0,
       0,
       minsize - margin * 2,
-      0.5,
+      weight,
       2,
       "a",
       false,
@@ -137,6 +141,10 @@ export default function Word({
         ) {
           current.attr("cy", c1y + minsize);
         }
+
+        if (Math.abs(current.attr("cx") - c2x) > maxsize) {
+          current.attr("cx", c2x + maxsize);
+        }
       }
 
       x1 = d3.select("#c1").attr("cx");
@@ -158,15 +166,21 @@ export default function Word({
       var xoff = Math.abs(x1 - x2) - minsize;
       xpos = parseInt(x1);
       ypos = parseInt(y1);
+
+      var result = "";
+      var characters = "abcdefghijklnopqrstuvxyz0123456789!@#$%^&*{}[]";
+      var charactersLength = characters.length;
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+
       char(
-        "b",
+        letter,
         svg,
         xpos + margin,
         ypos + minsize - margin,
         xoff,
         -yoff,
         minsize - margin * 2,
-        0.5,
+        weight,
         2,
         "a",
         true,
